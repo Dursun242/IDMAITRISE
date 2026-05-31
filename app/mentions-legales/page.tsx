@@ -39,7 +39,7 @@ export default function MentionsLegalesPage() {
         <Block title="Éditeur du site">
           <p>{site.legalName} — {site.legal.form}</p>
           <p>
-            {site.address.street}, {site.address.zip} {site.address.city}, France
+            {site.address.street}, {site.address.postalCode} {site.address.city}, France
           </p>
           <p>SIREN : {site.legal.siren}</p>
           <p>SIRET (siège) : {site.legal.siret}</p>
@@ -60,7 +60,7 @@ export default function MentionsLegalesPage() {
         </Block>
 
         <Block title="Directeur de la publication">
-          <p>Le représentant légal de {site.legalName}.</p>
+          <p>{site.legal.director}, gérant de {site.legalName}.</p>
         </Block>
 
         <Block title="Hébergement">

@@ -23,6 +23,16 @@ export const site = {
     instagram: "https://www.instagram.com/idmaitrise/",
     linkedin: "https://www.linkedin.com/company/id-conseil-lehavre",
   },
+  // Données légales (source : annuaire des entreprises / INSEE)
+  legal: {
+    form: "SARL",
+    director: "Dursun Özkan",
+    siren: "921 536 181",
+    siret: "92153618100016",
+    ape: "7112B — Ingénierie, études techniques",
+    registered: "16 novembre 2022",
+    rcs: "Le Havre",
+  },
 }
 
 export type ServiceLink = { slug: string; title: string; short: string }

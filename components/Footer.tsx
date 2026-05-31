@@ -116,7 +116,11 @@ export function Footer() {
           <div>
             © {new Date().getFullYear()} {site.legalName} — Tous droits réservés.
           </div>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-5">
+            <Link href="/mentions-legales" className="hover:text-paper">
+              Mentions légales
+            </Link>
+            <span>·</span>
             <span>Assurance décennale</span>
             <span>·</span>
             <span>RC Professionnelle</span>
