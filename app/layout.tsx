@@ -4,6 +4,7 @@ import "./globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { StickyCta } from "@/components/StickyCta"
+import { Analytics } from "@/components/Analytics"
 import { JsonLd } from "@/components/JsonLd"
 import { site } from "@/lib/site"
 
@@ -50,6 +51,10 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+export const viewport = {
+  themeColor: "#0E0F11",
+}
+
 const localBusiness = {
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
@@ -83,10 +88,14 @@ export default function RootLayout({
     >
       <body className="font-sans">
         <JsonLd data={localBusiness} />
+        <a href="#contenu" className="skip-link">
+          Aller au contenu
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="contenu">{children}</main>
         <Footer />
         <StickyCta />
+        <Analytics />
       </body>
     </html>
   )

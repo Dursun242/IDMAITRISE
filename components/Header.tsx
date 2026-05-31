@@ -23,7 +23,7 @@ export function Header() {
           ID&nbsp;Maîtrise
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Navigation principale" className="hidden items-center gap-1 lg:flex">
           {nav.map((n) => (
             <Link
               key={n.href}

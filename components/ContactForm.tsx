@@ -6,12 +6,17 @@ type Status = "idle" | "sending" | "ok" | "error"
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle")
+  const [startedAt] = useState(() => Date.now())
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus("sending")
     const form = e.currentTarget
-    const payload = Object.fromEntries(new FormData(form).entries())
+    const payload = {
+      ...Object.fromEntries(new FormData(form).entries()),
+      // anti-spam : temps de remplissage (un bot soumet instantanément)
+      _elapsed: Date.now() - startedAt,
+    }
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -37,6 +42,18 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
+      {/* Honeypot anti-spam : invisible pour les humains, rempli par les bots */}
+      <div aria-hidden className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="company">Ne pas remplir</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div className={fieldWrap}>
           <label htmlFor="name" className={fieldLabel}>
