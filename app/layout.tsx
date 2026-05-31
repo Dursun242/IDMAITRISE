@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Fraunces, Archivo } from "next/font/google"
+import { Fraunces, Inter, Instrument_Serif } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
@@ -10,10 +10,18 @@ const display = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
+  axes: ["opsz", "SOFT"],
 })
-const sans = Archivo({
+const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+})
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 })
 
@@ -63,7 +71,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${display.variable} ${sans.variable}`}>
+    <html
+      lang="fr"
+      className={`${display.variable} ${sans.variable} ${serif.variable}`}
+    >
       <body className="font-sans">
         <JsonLd data={localBusiness} />
         <Header />

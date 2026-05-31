@@ -3,78 +3,126 @@ import { site, services } from "@/lib/site"
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-ink/10 bg-ink text-paper">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <div className="font-display text-lg font-semibold">ID Maîtrise</div>
-          <p className="mt-3 text-sm leading-relaxed text-paper/70">{site.tagline}.</p>
-        </div>
+    <footer className="relative mt-32 overflow-hidden bg-ink text-paper">
+      <div className="absolute inset-0 fine-grid opacity-[0.08]" />
+      <div className="absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-ember/20 blur-[120px]" />
 
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.15em] text-paper/50">
-            Prestations
+      <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8">
+        <div className="grid gap-12 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+          <div>
+            <div className="eyebrow text-paper/50">Maître d'œuvre · Le Havre</div>
+            <p className="mt-5 font-display text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl">
+              Concevons ensemble
+              <br />
+              <span className="italic-accent text-ember">votre prochain</span> projet.
+            </p>
+            <Link
+              href="/contact"
+              className="group mt-7 inline-flex items-center gap-3 rounded-full bg-paper px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-white"
+            >
+              Démarrer un projet
+              <span className="arrow-out">→</span>
+            </Link>
           </div>
-          <ul className="mt-4 space-y-2 text-sm text-paper/80">
-            {services.map((s) => (
-              <li key={s.slug}>
-                <Link href={`/${s.slug}`} className="transition-colors hover:text-white">
-                  {s.title}
-                </Link>
+
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">
+              Prestations
+            </div>
+            <ul className="mt-5 space-y-2.5 text-sm text-paper/75">
+              {services.slice(0, 5).map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    href={`/${s.slug}`}
+                    className="link-underline transition-colors hover:text-paper"
+                  >
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">
+              Studio
+            </div>
+            <ul className="mt-5 space-y-2.5 text-sm text-paper/75">
+              <li>{site.address.street}</li>
+              <li>
+                {site.address.postalCode} {site.address.city}
               </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.15em] text-paper/50">
-            Contact
+              <li className="pt-2">
+                <a
+                  href={`tel:${site.phone}`}
+                  className="link-underline transition-colors hover:text-paper"
+                >
+                  {site.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="link-underline transition-colors hover:text-paper"
+                >
+                  {site.email}
+                </a>
+              </li>
+              <li className="text-paper/50">{site.hoursDisplay}</li>
+            </ul>
           </div>
-          <ul className="mt-4 space-y-2 text-sm text-paper/80">
-            <li>{site.address.street}</li>
-            <li>
-              {site.address.postalCode} {site.address.city}
-            </li>
-            <li>
-              <a href={`tel:${site.phone}`} className="transition-colors hover:text-white">
-                {site.phoneDisplay}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${site.email}`} className="transition-colors hover:text-white">
-                {site.email}
-              </a>
-            </li>
-            <li>{site.hoursDisplay}</li>
-          </ul>
-        </div>
 
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.15em] text-paper/50">
-            Suivez-nous
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">
+              Suivre
+            </div>
+            <ul className="mt-5 space-y-2.5 text-sm text-paper/75">
+              <li>
+                <a
+                  href={site.social.linkedin}
+                  className="link-underline transition-colors hover:text-paper"
+                >
+                  LinkedIn ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.social.instagram}
+                  className="link-underline transition-colors hover:text-paper"
+                >
+                  Instagram ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.social.facebook}
+                  className="link-underline transition-colors hover:text-paper"
+                >
+                  Facebook ↗
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul className="mt-4 space-y-2 text-sm text-paper/80">
-            <li>
-              <a href={site.social.linkedin} className="transition-colors hover:text-white">
-                LinkedIn
-              </a>
-            </li>
-            <li>
-              <a href={site.social.instagram} className="transition-colors hover:text-white">
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href={site.social.facebook} className="transition-colors hover:text-white">
-                Facebook
-              </a>
-            </li>
-          </ul>
         </div>
-      </div>
 
-      <div className="border-t border-paper/10">
-        <div className="mx-auto max-w-6xl px-5 py-6 text-xs text-paper/50">
-          © {new Date().getFullYear()} ID Maîtrise — Tous droits réservés.
+        <div
+          aria-hidden
+          className="mt-20 select-none font-display text-[18vw] font-semibold leading-[0.85] tracking-tightest text-paper/[0.06]"
+        >
+          ID&nbsp;Maîtrise
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-paper/10 pt-8 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            © {new Date().getFullYear()} {site.legalName} — Tous droits réservés.
+          </div>
+          <div className="flex gap-5">
+            <span>Assurance décennale</span>
+            <span>·</span>
+            <span>RC Professionnelle</span>
+            <span>·</span>
+            <span>RE2020</span>
+          </div>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
-import { getDoc, getSlugs } from "@/lib/content"
+import { getDoc, getSlugs, getAllDocs } from "@/lib/content"
 import { JsonLd } from "@/components/JsonLd"
 import { site } from "@/lib/site"
 
@@ -41,6 +41,10 @@ export default async function Post({
   const post = getDoc("blog", slug)
   if (!post) notFound()
 
+  const others = getAllDocs("blog")
+    .filter((p) => p.slug !== slug)
+    .slice(0, 3)
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -55,44 +59,117 @@ export default async function Post({
   }
 
   return (
-    <article className="mx-auto max-w-3xl px-5 py-16">
+    <>
       <JsonLd data={articleSchema} />
-      <Link href="/blog" className="text-sm font-medium text-steel">
-        ← Tous les conseils
-      </Link>
-      <div className="mt-6 text-xs uppercase tracking-wide text-ink/40">
-        {post.date}
-      </div>
-      <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
-        {post.title}
-      </h1>
-      <div className="prose prose-neutral mt-8 max-w-none prose-headings:font-display prose-a:text-steel prose-a:no-underline hover:prose-a:underline">
-        <MDXRemote
-          source={post.content}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
-        />
-      </div>
 
-      <div className="mt-14 rounded-2xl bg-ink p-8 text-paper">
-        <h2 className="font-display text-xl font-semibold">Un projet au Havre ?</h2>
-        <p className="mt-2 text-paper/70">
-          Premier échange et devis gratuits. On regarde ensemble la faisabilité.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
+      <section className="relative border-b border-ink/10">
+        <div className="absolute inset-0 blueprint-grid opacity-60" />
+        <div className="relative mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
           <Link
-            href="/contact"
-            className="rounded-full bg-paper px-5 py-2.5 font-medium text-ink"
+            href="/blog"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-ink/65 hover:text-ink"
           >
-            Me contacter
+            <span className="rotate-180 transition-transform group-hover:-translate-x-1">
+              →
+            </span>
+            Retour au journal
           </Link>
-          <a
-            href={`tel:${site.phone}`}
-            className="rounded-full border border-paper/30 px-5 py-2.5 font-medium"
-          >
-            {site.phoneDisplay}
-          </a>
+
+          <div className="mt-10 flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-ink/50">
+            <span>{post.date}</span>
+            <span>·</span>
+            <span>{post.author}</span>
+          </div>
+
+          <h1 className="mt-5 font-display text-4xl font-medium leading-[1.02] tracking-tightest sm:text-6xl">
+            {post.title}
+          </h1>
+          {post.description && (
+            <p className="mt-6 text-lg leading-relaxed text-ink/65 sm:text-xl">
+              {post.description}
+            </p>
+          )}
         </div>
-      </div>
-    </article>
+      </section>
+
+      <article className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-20">
+        <div className="prose-editorial">
+          <MDXRemote
+            source={post.content}
+            options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          />
+        </div>
+      </article>
+
+      <section className="border-t border-ink/10 bg-paper-warm">
+        <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
+          <div className="rounded-3xl bg-ink p-8 text-paper sm:p-12">
+            <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+              <div>
+                <div className="eyebrow text-paper/50">Un projet ?</div>
+                <p className="mt-5 font-display text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
+                  Premier échange et devis
+                  <br />
+                  <span className="italic-accent text-ember">
+                    gratuits, au Havre.
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-col">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center justify-center gap-3 rounded-full bg-paper px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-white"
+                >
+                  Me contacter
+                  <span className="arrow-out">→</span>
+                </Link>
+                <a
+                  href={`tel:${site.phone}`}
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-paper/30 px-6 py-3.5 text-sm font-medium transition hover:border-paper/60"
+                >
+                  {site.phoneDisplay}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {others.length > 0 && (
+        <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
+          <div className="flex items-end justify-between gap-6">
+            <h2 className="font-display text-3xl font-medium tracking-tight sm:text-4xl">
+              Aussi à lire
+            </h2>
+            <Link
+              href="/blog"
+              className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-ink"
+            >
+              Tout le journal
+              <span className="arrow-out">→</span>
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            {others.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/blog/${p.slug}`}
+                className="group rounded-2xl border border-ink/10 bg-paper p-6 transition hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-lift"
+              >
+                <div className="text-xs uppercase tracking-[0.18em] text-ink/45">
+                  {p.date}
+                </div>
+                <h3 className="mt-3 font-display text-lg font-medium leading-tight tracking-tight">
+                  {p.title}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-sm text-ink/60">
+                  {p.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
   )
 }

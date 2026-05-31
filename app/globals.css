@@ -4,16 +4,214 @@
 
 :root {
   color-scheme: light;
+  --grain-opacity: 0.035;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   @apply bg-paper text-ink antialiased;
+  font-feature-settings: "ss01", "ss02", "cv11";
 }
 
-/* Fines lignes "plan / calque" pour les fonds de section */
+/* Sélection texte */
+::selection {
+  background: #0E0F11;
+  color: #F4EFE6;
+}
+
+/* Scrollbar custom (webkit) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(14,15,17,0.18);
+  border-radius: 10px;
+  border: 2px solid #F4EFE6;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14,15,17,0.32);
+}
+
+/* Grille "plan" subtile */
 .blueprint-grid {
   background-image:
-    linear-gradient(to right, rgba(39, 66, 95, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(39, 66, 95, 0.06) 1px, transparent 1px);
-  background-size: 30px 30px;
+    linear-gradient(to right, rgba(14,15,17,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14,15,17,0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Grille fine */
+.fine-grid {
+  background-image:
+    linear-gradient(to right, rgba(14,15,17,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14,15,17,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Pattern grain SVG en overlay */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* Eyebrow (petit label en haut des sections) */
+.eyebrow {
+  @apply inline-flex items-center gap-2 font-sans text-xs font-medium uppercase tracking-[0.22em] text-ink/55;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* Lien soulignement animé */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Bouton "magnetic" simple */
+.btn-primary {
+  @apply inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-medium text-paper transition;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.btn-primary:hover {
+  @apply bg-ink-soft;
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  @apply inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium transition;
+  border: 1px solid rgba(14,15,17,0.18);
+}
+.btn-secondary:hover {
+  border-color: rgba(14,15,17,0.5);
+  transform: translateY(-1px);
+}
+.btn-ember {
+  @apply inline-flex items-center gap-2 rounded-full bg-ember px-6 py-3.5 text-sm font-medium text-paper transition;
+}
+.btn-ember:hover {
+  @apply bg-ember-deep;
+  transform: translateY(-1px);
+}
+
+/* Flèche animée pour CTAs */
+.arrow-out {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .arrow-out,
+a:hover .arrow-out,
+button:hover .arrow-out {
+  transform: translateX(4px);
+}
+
+/* Mix display italic accent */
+.italic-accent {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Bordure pointillée fine type "plan" */
+.dashed-rule {
+  background-image: linear-gradient(to right, rgba(14,15,17,0.3) 50%, transparent 50%);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  background-position: left center;
+  height: 1px;
+}
+
+/* Reveal au scroll, via animation-timeline si supporté, sinon fade-in */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+@supports not (animation-timeline: view()) {
+  .reveal {
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+/* Sticky CTA mobile */
+.sticky-cta {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+}
+@media (min-width: 768px) {
+  .sticky-cta {
+    display: none;
+  }
+}
+
+/* Marquee piste */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Numbers tabular */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Prose ajustements pour MDX éditorial */
+.prose-editorial {
+  @apply prose prose-neutral max-w-none;
+}
+.prose-editorial :where(h2) {
+  @apply font-display text-3xl font-semibold tracking-tight mt-12 mb-4;
+}
+.prose-editorial :where(h3) {
+  @apply font-display text-xl font-semibold tracking-tight mt-8 mb-3;
+}
+.prose-editorial :where(p) {
+  @apply text-[1.05rem] leading-[1.75] text-ink/80;
+}
+.prose-editorial :where(a) {
+  @apply text-ember underline decoration-ember/30 underline-offset-4 hover:decoration-ember;
+}
+.prose-editorial :where(blockquote) {
+  @apply not-italic border-l-2 border-ember pl-6 text-ink/80;
 }

@@ -2,6 +2,10 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { site, services } from "@/lib/site"
 import { getAllDocs } from "@/lib/content"
+import { Marquee } from "@/components/Marquee"
+import { Stats } from "@/components/Stats"
+import { ProcessSteps } from "@/components/ProcessSteps"
+import { ServiceCard } from "@/components/ServiceCard"
 
 export const metadata: Metadata = {
   title: "Maître d'œuvre au Havre — ID Maîtrise",
@@ -12,15 +16,15 @@ export const metadata: Metadata = {
 const engagements = [
   {
     t: "Interlocuteur unique",
-    d: "Un seul responsable de l'étude à la réception : il pilote artisans, planning et budget.",
+    d: "Un seul responsable de l'étude à la réception. Artisans, planning, budget — tout passe par nous.",
   },
   {
-    t: "Conformité & garanties",
-    d: "Plans conformes RE2020, assurance décennale et responsabilité civile professionnelle.",
+    t: "Conformité totale",
+    d: "Plans conformes RE2020, assurance décennale, responsabilité civile professionnelle.",
   },
   {
-    t: "Ancrage local",
-    d: "Réseau d'artisans normands et connaissance fine de l'urbanisme du Havre.",
+    t: "Ancrage normand",
+    d: "Réseau d'artisans locaux, connaissance fine du PLUi du Havre et des règles ABF.",
   },
 ]
 
@@ -29,114 +33,237 @@ export default function Home() {
 
   return (
     <>
-      <section className="blueprint-grid border-b border-ink/10">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-steel">
-            Le Havre · Seine-Maritime · Normandie
-          </p>
-          <h1 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-            Votre maison sur-mesure au Havre, de l'étude à la réception.
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 blueprint-grid opacity-60" />
+        <div className="absolute -left-32 top-20 h-[420px] w-[420px] rounded-full bg-ember/15 blur-[100px] animate-blob" />
+        <div className="absolute right-0 top-1/2 h-[360px] w-[360px] rounded-full bg-sage/15 blur-[100px] animate-blob" style={{ animationDelay: "6s" }} />
+
+        <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
+          <div className="flex items-center gap-3">
+            <span className="eyebrow">Le Havre · Normandie</span>
+            <span className="hidden text-xs text-ink/40 sm:inline">·</span>
+            <span className="hidden text-xs uppercase tracking-[0.22em] text-ink/55 sm:inline">
+              Maîtrise d'œuvre indépendante
+            </span>
+          </div>
+
+          <h1 className="mt-8 max-w-5xl font-display text-[clamp(2.75rem,7vw,6.25rem)] font-medium leading-[0.95] tracking-tightest">
+            Bâtir la maison qui <span className="italic-accent text-ember">vous</span> ressemble,
+            <br className="hidden sm:block" />
+            au Havre et en Normandie.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/70">
-            ID Maîtrise, maître d'œuvre indépendant, conçoit et pilote votre
-            maison contemporaine — comme vos projets d'extension et de rénovation.
-            Un interlocuteur unique, des artisans qualifiés, un budget tenu.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/construction-maison-individuelle"
-              className="rounded-full bg-steel px-6 py-3 font-medium text-paper transition hover:bg-steel-dark"
-            >
-              Faire construire ma maison
-            </Link>
-            <a
-              href={`tel:${site.phone}`}
-              className="rounded-full border border-ink/15 px-6 py-3 font-medium transition hover:border-ink/40"
-            >
-              {site.phoneDisplay}
-            </a>
-          </div>
-        </div>
-      </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-20">
-        <h2 className="font-display text-2xl font-semibold sm:text-3xl">
-          Nos prestations
-        </h2>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/${s.slug}`}
-              className="group rounded-2xl border border-ink/10 bg-white/60 p-6 transition hover:-translate-y-0.5 hover:border-steel/40 hover:shadow-lg"
-            >
-              <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-steel">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/65">{s.short}</p>
-              <span className="mt-4 inline-block text-sm font-medium text-steel">
-                En savoir plus →
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+          <div className="mt-12 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+            <p className="max-w-2xl text-lg leading-relaxed text-ink/70 sm:text-xl">
+              ID Maîtrise conçoit et pilote votre projet — maison contemporaine,
+              extension, rénovation. Un seul interlocuteur, des artisans
+              qualifiés, un budget tenu, de la première esquisse aux clés en main.
+            </p>
 
-      <section className="border-y border-ink/10 bg-white/50">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 sm:grid-cols-3">
-          {engagements.map((b) => (
-            <div key={b.t}>
-              <h3 className="font-display text-lg font-semibold">{b.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/65">{b.d}</p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-sm font-medium text-paper transition hover:bg-ink-soft"
+              >
+                Démarrer mon projet
+                <span className="arrow-out">→</span>
+              </Link>
+              <a
+                href={`tel:${site.phone}`}
+                className="inline-flex items-center gap-3 rounded-full border border-ink/15 px-7 py-4 text-sm font-medium transition hover:border-ink/40"
+              >
+                <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-ember" />
+                {site.phoneDisplay}
+              </a>
             </div>
+          </div>
+
+          {/* Mini barre de "preuves" */}
+          <div className="mt-16 grid gap-6 border-t border-ink/10 pt-10 sm:grid-cols-3 sm:gap-12">
+            {engagements.map((e) => (
+              <div key={e.t}>
+                <div className="flex items-center gap-3">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-ember" />
+                  <h3 className="font-display text-base font-semibold tracking-tight">
+                    {e.t}
+                  </h3>
+                </div>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink/60">
+                  {e.d}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Marquee items={site.areaServed} />
+
+      {/* À PROPOS / SIGNATURE */}
+      <section className="relative bg-ink text-paper">
+        <div className="absolute inset-0 fine-grid opacity-[0.08]" />
+        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
+            <div>
+              <div className="eyebrow text-paper/50">À propos</div>
+              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
+                Une maîtrise d'œuvre
+                <br />
+                <span className="italic-accent text-ember">à taille humaine</span>,
+                <br />
+                exigeante sur le détail.
+              </h2>
+            </div>
+            <div className="space-y-6 text-paper/75">
+              <p className="text-lg leading-relaxed">
+                Installé au cœur du Havre, le cabinet ID Maîtrise accompagne
+                particuliers et professionnels sur l'ensemble de la
+                Seine-Maritime et du Calvados. Construction neuve, extension,
+                rénovation lourde, bâtiment professionnel : nous intervenons à
+                toutes les échelles.
+              </p>
+              <p className="leading-relaxed">
+                Notre force : un interlocuteur unique qui porte votre projet
+                d'un bout à l'autre — de la lecture du PLUi au procès-verbal
+                de réception. Nos artisans partenaires sont normands, choisis
+                sur la qualité de leur travail et la tenue de leurs engagements.
+              </p>
+              <div className="flex items-center gap-4 pt-4">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-3 rounded-full bg-paper px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-white"
+                >
+                  Prendre rendez-vous
+                  <span className="arrow-out">→</span>
+                </Link>
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-paper/70 hover:text-paper"
+                >
+                  Lire le journal
+                  <span className="arrow-out">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES — Bento */}
+      <section className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="eyebrow">Prestations</div>
+            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
+              Sept savoir-faire,
+              <br />
+              <span className="italic-accent text-ember">un seul cabinet.</span>
+            </h2>
+          </div>
+          <p className="max-w-md text-ink/65">
+            Du dessin à la coordination, en passant par les études techniques
+            réglementaires. Tout sous un même toit.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-fr">
+          {services.map((s, i) => (
+            <ServiceCard
+              key={s.slug}
+              service={s}
+              index={i}
+              featured={i === 0}
+            />
           ))}
         </div>
       </section>
 
+      <Stats />
+
+      <ProcessSteps />
+
+      {/* JOURNAL */}
       {posts.length > 0 && (
-        <section className="mx-auto max-w-6xl px-5 py-20">
-          <div className="flex items-end justify-between gap-4">
-            <h2 className="font-display text-2xl font-semibold sm:text-3xl">
-              Conseils & actualités
-            </h2>
-            <Link href="/blog" className="shrink-0 text-sm font-medium text-steel">
-              Tous les articles →
+        <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="eyebrow">Journal</div>
+              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
+                Conseils, repères
+                <br />
+                <span className="italic-accent text-ember">et coulisses.</span>
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-ink"
+            >
+              Tous les articles
+              <span className="arrow-out">→</span>
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 sm:grid-cols-3">
-            {posts.map((p) => (
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((p, i) => (
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
-                className="rounded-2xl border border-ink/10 p-6 transition hover:border-steel/40 hover:shadow-lg"
+                className="group relative flex flex-col rounded-3xl border border-ink/10 bg-paper-warm p-7 transition-all duration-500 hover:-translate-y-1 hover:border-ink/30 hover:shadow-lift sm:p-8"
               >
-                <div className="text-xs uppercase tracking-wide text-ink/40">
+                <div className="font-display text-xs font-medium tabular text-ink/30">
+                  / {String(i + 1).padStart(2, "0")}
+                </div>
+                <div className="mt-6 text-xs uppercase tracking-[0.18em] text-ink/45">
                   {p.date}
                 </div>
-                <h3 className="mt-2 font-display text-lg font-semibold leading-snug">
+                <h3 className="mt-3 font-display text-2xl font-medium leading-tight tracking-tight">
                   {p.title}
                 </h3>
-                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink/65">
+                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink/65">
                   {p.description}
                 </p>
+                <div className="mt-auto pt-8 text-sm font-medium text-ember">
+                  Lire l'article{" "}
+                  <span className="arrow-out inline-block">→</span>
+                </div>
               </Link>
             ))}
           </div>
         </section>
       )}
 
-      <section className="border-t border-ink/10 bg-ink text-paper">
-        <div className="mx-auto max-w-6xl px-5 py-14">
-          <h2 className="font-display text-2xl font-semibold">
-            Nous intervenons en Normandie
-          </h2>
-          <p className="mt-3 text-paper/70">{site.areaServed.join("  ·  ")}</p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-full bg-paper px-6 py-3 font-medium text-ink transition hover:bg-white"
-          >
-            Demander un devis gratuit
-          </Link>
+      {/* CTA FINAL */}
+      <section className="relative overflow-hidden bg-paper-warm">
+        <div className="absolute inset-0 blueprint-grid opacity-50" />
+        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="eyebrow justify-center">Premier échange offert</div>
+            <p className="mt-6 font-display text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl">
+              On regarde votre
+              <br />
+              <span className="italic-accent text-ember">projet ensemble</span> ?
+            </p>
+            <p className="mx-auto mt-6 max-w-xl text-ink/65">
+              Devis, faisabilité, premier rendez-vous : c'est gratuit et sans
+              engagement. On revient vers vous sous 24–48 h ouvrées.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-sm font-medium text-paper transition hover:bg-ink-soft"
+              >
+                Démarrer maintenant
+                <span className="arrow-out">→</span>
+              </Link>
+              <a
+                href={`tel:${site.phone}`}
+                className="inline-flex items-center gap-3 rounded-full border border-ink/15 bg-paper px-8 py-4 text-sm font-medium transition hover:border-ink/40"
+              >
+                {site.phoneDisplay}
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </>

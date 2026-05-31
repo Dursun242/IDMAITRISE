@@ -29,39 +29,89 @@ export function ContactForm() {
     }
   }
 
+  const fieldWrap = "group relative"
+  const fieldLabel =
+    "absolute left-4 top-3 text-xs font-medium uppercase tracking-[0.14em] text-ink/45 transition-colors group-focus-within:text-ember"
   const field =
-    "w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-steel"
+    "w-full rounded-xl border border-ink/15 bg-paper px-4 pb-3 pt-8 text-sm text-ink outline-none transition focus:border-ink focus:ring-2 focus:ring-ember/20"
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
-        <input name="name" required placeholder="Votre nom" className={field} />
-        <input name="phone" placeholder="Téléphone" className={field} />
+        <div className={fieldWrap}>
+          <label htmlFor="name" className={fieldLabel}>
+            Nom complet
+          </label>
+          <input
+            id="name"
+            name="name"
+            required
+            placeholder="Jean Dupont"
+            className={field}
+          />
+        </div>
+        <div className={fieldWrap}>
+          <label htmlFor="phone" className={fieldLabel}>
+            Téléphone
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            placeholder="06 12 34 56 78"
+            className={field}
+          />
+        </div>
       </div>
-      <input name="email" type="email" required placeholder="Email" className={field} />
-      <textarea
-        name="message"
-        required
-        rows={5}
-        placeholder="Décrivez votre projet (construction, extension, rénovation, permis…)"
-        className={field}
-      />
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="rounded-full bg-steel px-6 py-3 font-medium text-paper transition hover:bg-steel-dark disabled:opacity-60"
-      >
-        {status === "sending" ? "Envoi…" : "Envoyer ma demande"}
-      </button>
+
+      <div className={fieldWrap}>
+        <label htmlFor="email" className={fieldLabel}>
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="jean@exemple.fr"
+          className={field}
+        />
+      </div>
+
+      <div className={fieldWrap}>
+        <label htmlFor="message" className={fieldLabel}>
+          Votre projet
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows={6}
+          placeholder="Construction, extension, rénovation, permis…"
+          className={field}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="group inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-sm font-medium text-paper transition hover:bg-ink-soft disabled:opacity-60"
+        >
+          {status === "sending" ? "Envoi en cours…" : "Envoyer ma demande"}
+          <span className="arrow-out">→</span>
+        </button>
+        <p className="text-xs text-ink/45">Réponse sous 24–48 h ouvrées.</p>
+      </div>
+
       {status === "ok" && (
-        <p className="text-sm font-medium text-green-700">
-          Merci, votre message est bien parti. Réponse sous 24–48 h ouvrées.
-        </p>
+        <div className="rounded-xl border border-sage/30 bg-sage/10 p-4 text-sm text-sage-deep">
+          ✓ Votre message est bien parti. On vous recontacte rapidement.
+        </div>
       )}
       {status === "error" && (
-        <p className="text-sm font-medium text-red-700">
+        <div className="rounded-xl border border-ember/30 bg-ember/10 p-4 text-sm text-ember-deep">
           L'envoi a échoué. Appelez-nous directement, c'est plus rapide.
-        </p>
+        </div>
       )}
     </form>
   )
