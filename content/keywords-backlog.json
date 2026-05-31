@@ -1,0 +1,97 @@
+[
+  {
+    "keyword": "plui le havre",
+    "intent": "Règles d'urbanisme du PLUi avant de construire au Havre (zones, hauteurs, emprise).",
+    "status": "done"
+  },
+  {
+    "keyword": "maison contemporaine le havre",
+    "intent": "Faire construire une maison contemporaine au Havre : style, faisabilité, rôle du maître d'œuvre.",
+    "status": "todo"
+  },
+  {
+    "keyword": "maison d'architecte le havre",
+    "intent": "Obtenir une maison d'architecte au Havre via un maître d'œuvre ; nuance du seuil des 150 m².",
+    "status": "todo"
+  },
+  {
+    "keyword": "maison sur-mesure normandie",
+    "intent": "Concevoir une maison sur-mesure en Normandie plutôt qu'un modèle de catalogue.",
+    "status": "todo"
+  },
+  {
+    "keyword": "faire construire sa maison le havre",
+    "intent": "Les étapes pour faire construire sa maison au Havre, du terrain à la réception.",
+    "status": "todo"
+  },
+  {
+    "keyword": "constructeur de maison le havre",
+    "intent": "Constructeur (CCMI) ou maître d'œuvre au Havre : différences, liberté, budget.",
+    "status": "todo"
+  },
+  {
+    "keyword": "maison ossature bois normandie",
+    "intent": "Construire une maison ossature bois en Normandie : atouts, RE2020, points de vigilance.",
+    "status": "todo"
+  },
+  {
+    "keyword": "maison plain-pied le havre",
+    "intent": "Construire une maison de plain-pied au Havre : terrain, surface, budget, accessibilité.",
+    "status": "todo"
+  },
+  {
+    "keyword": "prix construction maison neuve le havre",
+    "intent": "Fourchettes de coût au m² d'une maison neuve au Havre et postes qui font varier le budget.",
+    "status": "todo"
+  },
+  {
+    "keyword": "maître d'œuvre ou architecte",
+    "intent": "Différences, seuil des 150 m², quand choisir un maître d'œuvre plutôt qu'un architecte.",
+    "status": "todo"
+  },
+  {
+    "keyword": "permis de construire le havre",
+    "intent": "Étapes, délais, pièces et intérêt d'un maître d'œuvre pour un permis de construire au Havre.",
+    "status": "todo"
+  },
+  {
+    "keyword": "déclaration préalable de travaux le havre",
+    "intent": "Quels travaux relèvent d'une déclaration préalable au Havre, comment monter le dossier.",
+    "status": "todo"
+  },
+  {
+    "keyword": "extension maison seine-maritime",
+    "intent": "Agrandir sa maison en Seine-Maritime : surface, autorisation, coût, faisabilité.",
+    "status": "todo"
+  },
+  {
+    "keyword": "prix maître d'œuvre rénovation",
+    "intent": "Comment se calculent les honoraires d'un maître d'œuvre en rénovation, ce qui est inclus.",
+    "status": "todo"
+  },
+  {
+    "keyword": "ouverture mur porteur le havre",
+    "intent": "Étude de structure, dimensionnement IPN et prix d'une ouverture de mur porteur au Havre.",
+    "status": "todo"
+  },
+  {
+    "keyword": "surélévation maison le havre",
+    "intent": "Gagner un étage : faisabilité, structure, urbanisme et budget d'une surélévation au Havre.",
+    "status": "todo"
+  },
+  {
+    "keyword": "déclaration préalable piscine le havre",
+    "intent": "Autorisation pour une piscine au Havre : seuils, déclaration préalable, taxe.",
+    "status": "todo"
+  },
+  {
+    "keyword": "étude de sol G1 G2 normandie",
+    "intent": "Différence G1/G2, obligation loi ELAN argiles, déroulé d'une étude de sol en Normandie.",
+    "status": "todo"
+  },
+  {
+    "keyword": "rénovation énergétique aides le havre",
+    "intent": "MaPrimeRénov' et aides à la rénovation énergétique mobilisables au Havre, rôle du maître d'œuvre.",
+    "status": "todo"
+  }
+]

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-paper text-ink antialiased;
+}
+
+/* Fines lignes "plan / calque" pour les fonds de section */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgba(39, 66, 95, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(39, 66, 95, 0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
