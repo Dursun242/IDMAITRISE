@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { zones } from "@/lib/data"
+import { localLandings } from "@/lib/data"
 import { services, site } from "@/lib/site"
 import { JsonLd } from "@/components/JsonLd"
 import { ProcessSteps } from "@/components/ProcessSteps"
@@ -135,6 +136,35 @@ export default async function ZonePage({
 
       <ProcessSteps />
       <Testimonials />
+
+      {/* Expertises locales liées à ce secteur (maillage interne) */}
+      {(() => {
+        const zoneLandings = localLandings.filter((l) => l.zoneSlug === z.slug)
+        if (zoneLandings.length === 0) return null
+        return (
+          <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+            <h2 className="font-display text-2xl font-medium tracking-tight sm:text-3xl">
+              Nos expertises à {z.city}
+            </h2>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {zoneLandings.map((l) => (
+                <Link
+                  key={l.slug}
+                  href={`/expertise/${l.slug}`}
+                  className="group rounded-2xl border border-ink/10 bg-paper-warm p-6 transition hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-lift"
+                >
+                  <h3 className="font-display text-lg font-medium leading-tight tracking-tight">
+                    {l.h1}
+                  </h3>
+                  <div className="mt-4 text-sm font-medium text-ember">
+                    Découvrir <span className="arrow-out inline-block">→</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )
+      })()}
 
       {/* Autres secteurs (maillage interne) */}
       <section className="border-t border-ink/10 bg-paper-warm">

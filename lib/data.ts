@@ -208,4 +208,192 @@ export const zones: Zone[] = [
       "Maison de caractère, extension contemporaine ou réhabilitation, nous conjuguons performance et respect de l'architecture locale.",
     neighborhoods: ["Vieux Bassin", "Côte de Grâce", "Équemauville", "Pennedepie", "Vasouy"],
   },
+  {
+    slug: "fecamp",
+    city: "Fécamp",
+    dept: "Seine-Maritime (76)",
+    intro:
+      "À Fécamp et sur la Côte d'Albâtre, nous accompagnons vos projets de construction, d'extension et de rénovation, avec une bonne connaissance des contraintes littorales et patrimoniales.",
+    localite:
+      "Maison de pêcheur, villa balnéaire ou construction neuve : nous adaptons chaque projet au relief et au climat marin.",
+    neighborhoods: ["Centre", "Le Ramponneau", "Saint-Léonard", "Les Hautes Falaises", "Ganzeville"],
+  },
+  {
+    slug: "deauville",
+    city: "Deauville",
+    dept: "Calvados (14)",
+    intro:
+      "À Deauville, Trouville et sur la Côte Fleurie, nous concevons et pilotons des projets exigeants, souvent en secteur protégé, dans le respect de l'architecture balnéaire normande.",
+    localite:
+      "Villa de caractère, résidence secondaire ou rénovation haut de gamme, nous sécurisons votre dossier et coordonnons des artisans de confiance.",
+    neighborhoods: ["Deauville", "Trouville-sur-Mer", "Tourgéville", "Bénerville", "Villers-sur-Mer"],
+  },
+  {
+    slug: "bolbec",
+    city: "Bolbec",
+    dept: "Seine-Maritime (76)",
+    intro:
+      "À Bolbec et dans le Caux, nous pilotons vos projets de maison, d'extension et de rénovation, du premier croquis à la remise des clés.",
+    localite:
+      "Centre-bourg, lotissement ou terrain isolé, nous concevons des bâtiments performants adaptés à votre budget.",
+    neighborhoods: ["Centre", "Lillebonne", "Gruchet-le-Valasse", "Saint-Jean-de-Folleville", "Mirville"],
+  },
+  {
+    slug: "harfleur",
+    city: "Harfleur",
+    dept: "Seine-Maritime (76)",
+    intro:
+      "À Harfleur et aux portes du Havre, nous accompagnons particuliers et professionnels sur tous leurs projets de bâtiment, en neuf comme en rénovation.",
+    localite:
+      "Maison de ville, extension ou local d'activité, nous maîtrisons les règles d'urbanisme de l'agglomération havraise.",
+    neighborhoods: ["Centre médiéval", "Beaulieu", "La Forêt", "Gonfreville-l'Orcher", "Rogerville"],
+  },
 ]
+
+// ─────────────────────────────────────────────────────────────────────────
+// Pages ciblées « prestation × ville » (SEO de longue traîne).
+// Contenu volontairement UNIQUE par combinaison pour éviter les pages
+// dupliquées « doorway » pénalisées par Google. Quelques combos à forte
+// valeur seulement — la qualité prime sur la quantité.
+// ─────────────────────────────────────────────────────────────────────────
+
+export type LocalLanding = {
+  slug: string
+  serviceSlug: string // référence vers services dans lib/site.ts
+  zoneSlug: string // référence vers zones ci-dessus
+  title: string
+  h1: string
+  metaDescription: string
+  intro: string
+  body: { heading: string; text: string }[]
+}
+
+export const localLandings: LocalLanding[] = [
+  {
+    slug: "permis-de-construire-rouen",
+    serviceSlug: "permis-de-construire",
+    zoneSlug: "rouen",
+    title: "Permis de construire à Rouen — ID Maîtrise",
+    h1: "Permis de construire à Rouen",
+    metaDescription:
+      "Montage et dépôt de votre permis de construire ou déclaration préalable à Rouen. Un maître d'œuvre qui sécurise votre dossier d'urbanisme face au PLU de la métropole.",
+    intro:
+      "Déposer un permis de construire à Rouen suppose de composer avec le PLU de la Métropole Rouen Normandie, le périmètre des Monuments historiques du centre et, selon les secteurs, l'avis des Architectes des Bâtiments de France. Nous montons un dossier complet et conforme, pour une instruction sans accroc.",
+    body: [
+      {
+        heading: "Un dossier pensé pour le contexte rouennais",
+        text: "Centre historique en secteur sauvegardé, coteaux de Bihorel ou pavillonnaire de Bois-Guillaume : chaque quartier a ses règles. Nous analysons votre parcelle, le zonage et les servitudes avant de dessiner, pour éviter les refus et les demandes de pièces complémentaires.",
+      },
+      {
+        heading: "Déclaration préalable ou permis ?",
+        text: "Selon la surface créée et la nature des travaux, nous déterminons le bon régime d'autorisation, puis nous constituons et déposons le dossier en ligne auprès du service urbanisme, en assurant le suivi jusqu'à l'obtention.",
+      },
+    ],
+  },
+  {
+    slug: "construction-maison-le-havre",
+    serviceSlug: "construction-maison-individuelle",
+    zoneSlug: "le-havre",
+    title: "Construction de maison au Havre — ID Maîtrise",
+    h1: "Construire sa maison au Havre",
+    metaDescription:
+      "Maître d'œuvre pour la construction de votre maison individuelle au Havre : conception sur-mesure, permis, RE2020 et chantier clé en main.",
+    intro:
+      "Faire construire au Havre, c'est composer avec un foncier contraint, le vent marin et un PLUi exigeant, notamment dans le centre reconstruit classé UNESCO. Nous concevons une maison sur-mesure qui tire parti de votre terrain, de la lumière et des vues, tout en respectant la réglementation.",
+    body: [
+      {
+        heading: "Une maison adaptée au littoral",
+        text: "Orientation, protection au vent, choix des matériaux et performance thermique RE2020 : nous concevons un projet durable et confortable, pensé pour le climat normand.",
+      },
+      {
+        heading: "Du terrain aux clés en main",
+        text: "Étude de faisabilité, dépôt du permis, consultation de nos artisans havrais et pilotage complet du chantier : vous gardez un interlocuteur unique du début à la fin.",
+      },
+    ],
+  },
+  {
+    slug: "renovation-maison-rouen",
+    serviceSlug: "maitre-oeuvre-habitat",
+    zoneSlug: "rouen",
+    title: "Rénovation de maison à Rouen — ID Maîtrise",
+    h1: "Rénover sa maison à Rouen",
+    metaDescription:
+      "Maître d'œuvre pour la rénovation de votre maison à Rouen : restructuration, ouverture de murs porteurs, rénovation énergétique et coordination des artisans.",
+    intro:
+      "Rénover une maison de ville rouennaise, souvent ancienne et mitoyenne, demande méthode et savoir-faire : diagnostic de l'existant, redistribution des volumes, mise aux normes et amélioration énergétique. Nous pilotons l'ensemble pour un résultat à la hauteur.",
+    body: [
+      {
+        heading: "Restructurer sans mauvaise surprise",
+        text: "Ouverture de murs porteurs, reprise de planchers, création de combles : nous sécurisons chaque intervention par une étude de structure et des plans d'exécution clairs pour les artisans.",
+      },
+      {
+        heading: "Gagner en confort et en énergie",
+        text: "Isolation, menuiseries, ventilation et chauffage : nous priorisons les travaux qui comptent et vous orientons vers les aides mobilisables pour votre rénovation.",
+      },
+    ],
+  },
+  {
+    slug: "extension-maison-caen",
+    serviceSlug: "maitre-oeuvre-habitat",
+    zoneSlug: "caen",
+    title: "Extension de maison à Caen — ID Maîtrise",
+    h1: "Agrandir sa maison à Caen",
+    metaDescription:
+      "Maître d'œuvre pour l'extension de votre maison à Caen : conception, déclaration préalable ou permis, et pilotage des travaux en tout corps d'état.",
+    intro:
+      "Une extension bien conçue agrandit votre maison sans la dénaturer. À Caen et son agglomération, nous dessinons des extensions — de plain-pied, à étage ou en ossature bois — qui s'intègrent à l'existant et respectent le PLU local.",
+    body: [
+      {
+        heading: "La bonne extension pour votre maison",
+        text: "Surélévation, véranda, pièce de vie ouverte sur le jardin : nous étudions la solution la plus adaptée à votre terrain, votre budget et vos usages.",
+      },
+      {
+        heading: "Autorisation et chantier maîtrisés",
+        text: "Nous déterminons le régime d'urbanisme (déclaration préalable ou permis), montons le dossier et coordonnons les artisans jusqu'à la réception.",
+      },
+    ],
+  },
+  {
+    slug: "ouverture-mur-porteur-le-havre",
+    serviceSlug: "ouverture-mur-porteur",
+    zoneSlug: "le-havre",
+    title: "Ouverture de mur porteur au Havre — ID Maîtrise",
+    h1: "Ouverture de mur porteur au Havre",
+    metaDescription:
+      "Ouverture de mur porteur au Havre : détection, étude de structure, dimensionnement IPN/HEA et plans d'exécution pour ouvrir en toute sécurité.",
+    intro:
+      "Ouvrir un mur porteur dans une maison havraise — souvent ancienne ou reconstruite d'après-guerre — ne s'improvise pas. Une erreur engage la stabilité du bâtiment. Nous sécurisons l'opération de bout en bout, étude de structure à l'appui.",
+    body: [
+      {
+        heading: "Étude de structure et dimensionnement",
+        text: "Nous identifions le mur porteur, analysons les descentes de charges et dimensionnons la poutre (IPN, HEA) avec une note de calcul que vos artisans pourront chiffrer proprement.",
+      },
+      {
+        heading: "Des plans clairs pour le chantier",
+        text: "Plans d'exécution, étaiement, séquence de travaux : tout est documenté pour intervenir en sécurité et sans mauvaise surprise.",
+      },
+    ],
+  },
+  {
+    slug: "maitre-oeuvre-professionnels-rouen",
+    serviceSlug: "maitre-oeuvre-professionnels",
+    zoneSlug: "rouen",
+    title: "Maître d'œuvre pour professionnels à Rouen — ID Maîtrise",
+    h1: "Maître d'œuvre pour professionnels à Rouen",
+    metaDescription:
+      "Maître d'œuvre pour entreprises et collectivités à Rouen : OPC, AMO et MOE d'exécution pour bâtiments tertiaires, commerciaux et industriels.",
+    intro:
+      "Sur la métropole de Rouen, nous pilotons des opérations de construction, d'aménagement et de réhabilitation pour les entreprises, investisseurs et collectivités, en tout corps d'état et dans le respect des délais.",
+    body: [
+      {
+        heading: "OPC, AMO, MOE d'exécution",
+        text: "Ordonnancement-pilotage-coordination, assistance à maîtrise d'ouvrage ou maîtrise d'œuvre d'exécution : nous intervenons à la mission qui correspond à votre besoin.",
+      },
+      {
+        heading: "Tenir le planning et le budget",
+        text: "Consultation des entreprises, suivi de chantier, reporting régulier : vous gardez la visibilité sur l'avancement et les coûts à chaque étape.",
+      },
+    ],
+  },
+]
+

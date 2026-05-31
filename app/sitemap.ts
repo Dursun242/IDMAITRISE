@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 import { getSlugs } from "@/lib/content"
 import { site } from "@/lib/site"
-import { zones } from "@/lib/data"
+import { zones, localLandings } from "@/lib/data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url
@@ -23,6 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
+  const landingRoutes: MetadataRoute.Sitemap = localLandings.map((l) => ({
+    url: `${base}/expertise/${l.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }))
+
   const serviceRoutes: MetadataRoute.Sitemap = getSlugs("services").map((s) => ({
     url: `${base}/${s}`,
     lastModified: now,
@@ -37,5 +44,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...serviceRoutes, ...zoneRoutes, ...postRoutes]
+  return [...staticRoutes, ...serviceRoutes, ...zoneRoutes, ...landingRoutes, ...postRoutes]
 }
