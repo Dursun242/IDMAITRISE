@@ -61,6 +61,7 @@ scripts/
 3. Dans **Settings → Environment Variables**, ajoute :
    - `NEXT_PUBLIC_SITE_URL` = `https://www.id-maitrise.com` (l'URL finale du site)
    - `RESEND_API_KEY` = ta clé Resend (optionnel — sans elle, le formulaire journalise au lieu d'envoyer)
+   - `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` = `id-maitrise.com` (optionnel — active l'analytics Plausible, sans cookies ni bannière ; laisse vide pour le désactiver)
 4. Deploy. À chaque `git push`, Vercel redéploie tout seul.
 
 ---
