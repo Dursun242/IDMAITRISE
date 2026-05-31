@@ -3,9 +3,10 @@ import { site } from "@/lib/site"
 
 const nav = [
   { href: "/", label: "L'agence" },
-  { href: "/construction-maison-individuelle", label: "Construire" },
-  { href: "/maitre-oeuvre-habitat", label: "Rénover" },
+  { href: "/maitre-oeuvre-habitat", label: "Habitat" },
   { href: "/maitre-oeuvre-professionnels", label: "Professionnels" },
+  { href: "/realisations", label: "Réalisations" },
+  { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Journal" },
   { href: "/contact", label: "Contact" },
 ]

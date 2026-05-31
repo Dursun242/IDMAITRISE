@@ -6,6 +6,10 @@ import { Marquee } from "@/components/Marquee"
 import { Stats } from "@/components/Stats"
 import { ProcessSteps } from "@/components/ProcessSteps"
 import { ServiceCard } from "@/components/ServiceCard"
+import { ProjectGrid } from "@/components/ProjectGrid"
+import { Testimonials } from "@/components/Testimonials"
+import { FaqSection } from "@/components/Faq"
+import { zones } from "@/lib/data"
 
 export const metadata: Metadata = {
   title: "Maître d'œuvre au Havre — ID Maîtrise",
@@ -181,7 +185,33 @@ export default function Home() {
 
       <Stats />
 
+      {/* RÉALISATIONS (aperçu) */}
+      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="eyebrow">Réalisations</div>
+            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
+              Des projets livrés,
+              <br />
+              <span className="italic-accent text-ember">pas des promesses.</span>
+            </h2>
+          </div>
+          <Link
+            href="/realisations"
+            className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-ink"
+          >
+            Toutes les réalisations
+            <span className="arrow-out">→</span>
+          </Link>
+        </div>
+        <div className="mt-12">
+          <ProjectGrid limit={2} />
+        </div>
+      </section>
+
       <ProcessSteps />
+
+      <Testimonials />
 
       {/* JOURNAL */}
       {posts.length > 0 && (
@@ -232,6 +262,50 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* SECTEURS (SEO local) */}
+      <section className="border-y border-ink/10 bg-paper-warm">
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="eyebrow">Secteurs</div>
+              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
+                Au Havre et
+                <br />
+                <span className="italic-accent text-ember">partout en Normandie.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-ink/65">
+              Basés au Havre, nous intervenons sur toute la Seine-Maritime et le
+              Calvados. Trouvez votre commune.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {zones.map((z) => (
+              <Link
+                key={z.slug}
+                href={`/secteur/${z.slug}`}
+                className="group flex items-center justify-between rounded-2xl border border-ink/10 bg-paper p-6 transition hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-lift"
+              >
+                <div>
+                  <div className="font-display text-xl font-medium tracking-tight">
+                    {z.city}
+                  </div>
+                  <div className="mt-1 text-xs uppercase tracking-[0.16em] text-ink/45">
+                    {z.dept}
+                  </div>
+                </div>
+                <span className="text-ink/30 transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FaqSection />
 
       {/* CTA FINAL */}
       <section className="relative overflow-hidden bg-paper-warm">

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { site, services } from "@/lib/site"
+import { zones } from "@/lib/data"
 
 export function Footer() {
   return (
@@ -74,40 +75,59 @@ export function Footer() {
 
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">
-              Suivre
+              Explorer
             </div>
             <ul className="mt-5 space-y-2.5 text-sm text-paper/75">
               <li>
-                <a
-                  href={site.social.linkedin}
-                  className="link-underline transition-colors hover:text-paper"
-                >
-                  LinkedIn ↗
-                </a>
+                <Link href="/realisations" className="link-underline transition-colors hover:text-paper">
+                  Réalisations
+                </Link>
               </li>
               <li>
-                <a
-                  href={site.social.instagram}
-                  className="link-underline transition-colors hover:text-paper"
-                >
-                  Instagram ↗
-                </a>
+                <Link href="/faq" className="link-underline transition-colors hover:text-paper">
+                  Questions fréquentes
+                </Link>
               </li>
               <li>
-                <a
-                  href={site.social.facebook}
-                  className="link-underline transition-colors hover:text-paper"
-                >
-                  Facebook ↗
-                </a>
+                <Link href="/blog" className="link-underline transition-colors hover:text-paper">
+                  Journal
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="link-underline transition-colors hover:text-paper">
+                  Contact
+                </Link>
               </li>
             </ul>
+
+            <div className="mt-6 flex gap-4 text-sm text-paper/75">
+              <a href={site.social.linkedin} className="hover:text-paper">LinkedIn ↗</a>
+              <a href={site.social.instagram} className="hover:text-paper">Instagram ↗</a>
+              <a href={site.social.facebook} className="hover:text-paper">Facebook ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 border-t border-paper/10 pt-8">
+          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">
+            Maître d'œuvre en Normandie
+          </div>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-paper/70">
+            {zones.map((z) => (
+              <Link
+                key={z.slug}
+                href={`/secteur/${z.slug}`}
+                className="link-underline hover:text-paper"
+              >
+                {z.city}
+              </Link>
+            ))}
           </div>
         </div>
 
         <div
           aria-hidden
-          className="mt-20 select-none font-display text-[18vw] font-semibold leading-[0.85] tracking-tightest text-paper/[0.06]"
+          className="mt-16 select-none font-display text-[18vw] font-semibold leading-[0.85] tracking-tightest text-paper/[0.06]"
         >
           ID&nbsp;Maîtrise
         </div>
