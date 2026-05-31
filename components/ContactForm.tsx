@@ -4,24 +4,38 @@ import { useState } from "react"
 
 type Status = "idle" | "sending" | "ok" | "error"
 
+// Doit rester aligné avec la limite côté API (route.ts).
+const MAX_TOTAL_BYTES = 4 * 1024 * 1024 // 4 Mo
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle")
   const [startedAt] = useState(() => Date.now())
+  const [fileError, setFileError] = useState<string | null>(null)
+
+  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? [])
+    const total = files.reduce((sum, f) => sum + f.size, 0)
+    if (total > MAX_TOTAL_BYTES) {
+      setFileError("Pièce(s) jointe(s) trop volumineuse(s) : 4 Mo maximum au total.")
+      e.target.value = ""
+    } else {
+      setFileError(null)
+    }
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (fileError) return
     setStatus("sending")
     const form = e.currentTarget
-    const payload = {
-      ...Object.fromEntries(new FormData(form).entries()),
-      // anti-spam : temps de remplissage (un bot soumet instantanément)
-      _elapsed: Date.now() - startedAt,
-    }
+    // FormData (multipart) pour porter d'éventuelles pièces jointes.
+    const data = new FormData(form)
+    // anti-spam : temps de remplissage (un bot soumet instantanément)
+    data.append("_elapsed", String(Date.now() - startedAt))
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: data, // pas de Content-Type manuel : le navigateur gère le boundary
       })
       if (res.ok) {
         setStatus("ok")
@@ -106,6 +120,31 @@ export function ContactForm() {
           placeholder="Construction, extension, rénovation, permis…"
           className={field}
         />
+      </div>
+
+      {/* Pièce jointe (plan, photo, PDF…) */}
+      <div className="rounded-xl border border-dashed border-ink/20 bg-paper p-4">
+        <label
+          htmlFor="attachments"
+          className="text-xs font-medium uppercase tracking-[0.14em] text-ink/45"
+        >
+          Pièce jointe <span className="normal-case tracking-normal text-ink/35">(plan, photo, PDF — facultatif)</span>
+        </label>
+        <input
+          id="attachments"
+          name="attachments"
+          type="file"
+          multiple
+          accept="application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif"
+          onChange={onFileChange}
+          className="mt-3 block w-full text-sm text-ink/70 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-ink file:px-4 file:py-2 file:text-sm file:font-medium file:text-paper hover:file:bg-ink-soft"
+        />
+        <p className="mt-2 text-xs text-ink/45">
+          PDF ou image (JPG, PNG). 4 Mo maximum au total.
+        </p>
+        {fileError && (
+          <p className="mt-2 text-xs font-medium text-ember-deep">{fileError}</p>
+        )}
       </div>
 
       <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
