@@ -1,29 +1,32 @@
-import type { Metadata } from "next"
-import { Fraunces, Inter, Instrument_Serif } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { JsonLd } from "@/components/JsonLd"
+import { CursorGlow } from "@/components/CursorGlow"
 import { site } from "@/lib/site"
 
-const display = Fraunces({
+const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  axes: ["opsz", "SOFT"],
 })
 const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 })
-const serif = Instrument_Serif({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-serif",
-  weight: "400",
-  style: ["normal", "italic"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
   display: "swap",
 })
+
+export const viewport: Viewport = {
+  themeColor: "#04060B",
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -73,10 +76,11 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${display.variable} ${sans.variable} ${serif.variable}`}
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="font-sans">
         <JsonLd data={localBusiness} />
+        <CursorGlow />
         <Header />
         <main>{children}</main>
         <Footer />

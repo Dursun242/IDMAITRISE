@@ -31,9 +31,9 @@ export function ContactForm() {
 
   const fieldWrap = "group relative"
   const fieldLabel =
-    "absolute left-4 top-3 text-xs font-medium uppercase tracking-[0.14em] text-ink/45 transition-colors group-focus-within:text-ember"
+    "absolute left-4 top-3 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-ghost-mute transition-colors group-focus-within:text-holo"
   const field =
-    "w-full rounded-xl border border-ink/15 bg-paper px-4 pb-3 pt-8 text-sm text-ink outline-none transition focus:border-ink focus:ring-2 focus:ring-ember/20"
+    "w-full rounded-xl border border-holo/15 bg-void/60 px-4 pb-3 pt-8 text-sm text-ghost outline-none transition placeholder:text-ghost-mute/60 focus:border-holo/60 focus:shadow-glow"
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
@@ -95,22 +95,25 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-sm font-medium text-paper transition hover:bg-ink-soft disabled:opacity-60"
+          className="btn-holo group disabled:opacity-60"
         >
-          {status === "sending" ? "Envoi en cours…" : "Envoyer ma demande"}
+          {status === "sending" ? "Transmission…" : "Transmettre ma demande"}
           <span className="arrow-out">→</span>
         </button>
-        <p className="text-xs text-ink/45">Réponse sous 24–48 h ouvrées.</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ghost-mute">
+          Réponse &lt; 24–48 h ouvrées
+        </p>
       </div>
 
       {status === "ok" && (
-        <div className="rounded-xl border border-sage/30 bg-sage/10 p-4 text-sm text-sage-deep">
-          ✓ Votre message est bien parti. On vous recontacte rapidement.
+        <div className="rounded-xl border border-holo/30 bg-holo/10 p-4 font-mono text-sm text-holo-soft">
+          // Transmission reçue. On vous recontacte rapidement.
+          <span className="caret ml-1 inline-block">▮</span>
         </div>
       )}
       {status === "error" && (
-        <div className="rounded-xl border border-ember/30 bg-ember/10 p-4 text-sm text-ember-deep">
-          L'envoi a échoué. Appelez-nous directement, c'est plus rapide.
+        <div className="rounded-xl border border-signal/40 bg-signal/10 p-4 font-mono text-sm text-signal">
+          // Échec de l'envoi. Appelez-nous directement, c'est plus rapide.
         </div>
       )}
     </form>

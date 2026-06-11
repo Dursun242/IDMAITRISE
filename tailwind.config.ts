@@ -10,41 +10,53 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: {
-          DEFAULT: '#F4EFE6',
-          warm: '#EFE8DB',
-          deep: '#E7DECB',
+        void: {
+          DEFAULT: '#04060B',
+          deep: '#020409',
         },
-        ink: {
-          DEFAULT: '#0E0F11',
-          soft: '#1C1E22',
-          muted: '#2A2D33',
+        carbon: {
+          DEFAULT: '#0A101A',
+          soft: '#0E1622',
+          edge: '#16202F',
         },
-        ember: {
-          DEFAULT: '#C97B3A',
-          deep: '#A85F23',
-          glow: '#E89968',
+        holo: {
+          DEFAULT: '#38E1FF',
+          soft: '#7EF0FF',
+          deep: '#0FB4D4',
+          dim: '#1A7E96',
         },
-        sage: {
-          DEFAULT: '#5E6B5A',
-          deep: '#3F4A3D',
+        pulse: {
+          DEFAULT: '#6F7CFF',
+          deep: '#4853D8',
         },
-        steel: { DEFAULT: '#27425F', dark: '#1B2F46' },
-        ochre: '#C2771B',
+        signal: {
+          DEFAULT: '#FF8A3D',
+          deep: '#E0641A',
+        },
+        ghost: {
+          DEFAULT: '#E9F4FF',
+          dim: '#9FB4C8',
+          mute: '#5F7287',
+        },
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        serif: ['var(--font-serif)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {
         tightest: '-0.04em',
       },
       animation: {
-        'marquee': 'marquee 40s linear infinite',
+        'marquee': 'marquee 36s linear infinite',
         'fade-up': 'fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both',
         'fade-in': 'fade-in 1s ease-out both',
-        'blob': 'blob 18s ease-in-out infinite',
+        'aurora': 'aurora 16s ease-in-out infinite',
+        'float': 'float 7s ease-in-out infinite',
+        'pulse-soft': 'pulse-soft 3s ease-in-out infinite',
+        'flicker': 'flicker 5s linear infinite',
+        'grid-pan': 'grid-pan 24s linear infinite',
+        'spin-slow': 'spin 28s linear infinite',
       },
       keyframes: {
         marquee: {
@@ -59,16 +71,37 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        blob: {
+        aurora: {
           '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '33%': { transform: 'translate(30px, -40px) scale(1.08)' },
-          '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+          '33%': { transform: 'translate(40px, -30px) scale(1.1)' },
+          '66%': { transform: 'translate(-30px, 24px) scale(0.94)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-14px)' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '88%': { opacity: '1' },
+          '89%': { opacity: '0.4' },
+          '90%': { opacity: '1' },
+          '95%': { opacity: '0.65' },
+          '96%': { opacity: '1' },
+        },
+        'grid-pan': {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '-64px -64px' },
         },
       },
       boxShadow: {
-        'soft': '0 1px 2px rgba(14,15,17,0.04), 0 8px 24px -8px rgba(14,15,17,0.08)',
-        'lift': '0 2px 4px rgba(14,15,17,0.04), 0 24px 60px -20px rgba(14,15,17,0.18)',
-        'inset-border': 'inset 0 0 0 1px rgba(14,15,17,0.08)',
+        'glow': '0 0 28px -8px rgba(56,225,255,0.55)',
+        'glow-lg': '0 0 64px -12px rgba(56,225,255,0.55)',
+        'glow-signal': '0 0 28px -8px rgba(255,138,61,0.5)',
+        'panel': '0 32px 80px -32px rgba(0,0,0,0.85)',
       },
     },
   },

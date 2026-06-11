@@ -61,15 +61,15 @@ export function ServiceCard({ service, index, featured }: Props) {
   return (
     <Link
       href={`/${service.slug}`}
-      className={`group relative flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-warm p-7 transition-all duration-500 hover:-translate-y-1 hover:border-ink/30 hover:shadow-lift sm:p-8 ${
+      className={`glass group relative flex flex-col overflow-hidden rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 hover:border-holo/40 hover:shadow-glow sm:p-8 ${
         featured ? "lg:col-span-2 lg:row-span-2" : ""
       }`}
     >
-      <div className="absolute right-6 top-6 font-display text-xs font-medium tabular text-ink/30">
-        / {String(index + 1).padStart(2, "0")}
+      <div className="absolute right-6 top-6 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-ghost-mute transition-colors group-hover:text-holo">
+        Mod.{String(index + 1).padStart(2, "0")}
       </div>
 
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-ember transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-holo/25 bg-holo/[0.07] text-holo transition-all duration-500 group-hover:scale-110 group-hover:shadow-glow">
         {icons[service.slug] ?? (
           <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
             <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5" />
@@ -78,26 +78,35 @@ export function ServiceCard({ service, index, featured }: Props) {
       </div>
 
       <h3
-        className={`mt-6 font-display font-medium leading-tight tracking-tight ${
+        className={`mt-6 font-display font-semibold leading-tight tracking-tight ${
           featured ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl"
         }`}
       >
         {service.title}
       </h3>
-      <p className="mt-3 max-w-md text-sm leading-relaxed text-ink/65">
+      <p className="mt-3 max-w-md text-sm leading-relaxed text-ghost-dim">
         {service.short}
       </p>
 
+      {featured && (
+        <div className="mt-6 flex flex-wrap gap-2">
+          <span className="chip">Conception</span>
+          <span className="chip">Permis</span>
+          <span className="chip">Chantier</span>
+          <span className="chip">Livraison</span>
+        </div>
+      )}
+
       <div className="mt-auto pt-8">
-        <span className="inline-flex items-center gap-2 text-sm font-medium text-ink">
-          Découvrir
+        <span className="inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.16em] text-holo">
+          Explorer
           <span className="arrow-out">→</span>
         </span>
       </div>
 
       <div
         aria-hidden
-        className="absolute -bottom-1/2 -right-1/3 h-full w-2/3 rounded-full bg-ember/0 blur-3xl transition-all duration-700 group-hover:bg-ember/10"
+        className="absolute -bottom-1/2 -right-1/3 h-full w-2/3 rounded-full bg-holo/0 blur-3xl transition-all duration-700 group-hover:bg-holo/10"
       />
     </Link>
   )

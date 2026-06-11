@@ -33,42 +33,47 @@ const steps = [
 
 export function ProcessSteps() {
   return (
-    <section className="relative bg-paper-warm">
-      <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+    <section className="relative overflow-hidden">
+      <div className="absolute -left-40 top-1/3 h-[420px] w-[420px] rounded-full bg-pulse/10 blur-[140px]" />
+
+      <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
         <div className="grid gap-16 lg:grid-cols-[1fr_2fr]">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <div className="eyebrow">Méthode</div>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl">
-              De la première
+            <div className="eyebrow">Protocole</div>
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+              Six phases.
               <br />
-              <span className="italic-accent text-ember">esquisse</span> aux
-              <br />
-              clés en main.
+              <span className="text-gradient-holo">Zéro angle mort.</span>
             </h2>
-            <p className="mt-6 max-w-md text-ink/65">
-              Une méthode éprouvée, six étapes claires. À chacune, vous savez
-              exactement où en est votre projet — et combien il coûte.
+            <p className="mt-6 max-w-md text-ghost-dim">
+              Une méthode éprouvée, séquencée comme un plan de vol. À chaque
+              phase, vous savez exactement où en est votre projet — et combien
+              il coûte.
             </p>
           </div>
 
-          <ol className="space-y-px">
+          <ol>
             {steps.map((step, i) => (
-              <li
-                key={step.n}
-                className="group relative grid grid-cols-[auto_1fr] gap-6 border-t border-ink/10 py-7 transition hover:bg-paper"
-              >
-                <div className="font-display text-xl font-medium tabular text-ember">
-                  {step.n}
-                </div>
-                <div>
-                  <h3 className="font-display text-2xl font-medium tracking-tight">
-                    {step.t}
-                  </h3>
-                  <p className="mt-2 max-w-xl text-ink/65">{step.d}</p>
-                </div>
-                {i === steps.length - 1 && (
-                  <div className="col-span-2 border-b border-ink/10" />
+              <li key={step.n} className="group relative pb-10 pl-16 last:pb-0">
+                {/* Ligne de connexion */}
+                {i < steps.length - 1 && (
+                  <span
+                    aria-hidden
+                    className="absolute left-[19px] top-12 h-[calc(100%-2.5rem)] w-px bg-gradient-to-b from-holo/40 to-holo/10"
+                  />
                 )}
+                {/* Nœud */}
+                <span className="glass absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs font-semibold text-holo transition-all duration-500 group-hover:border-holo/50 group-hover:shadow-glow">
+                  {step.n}
+                </span>
+
+                <div className="font-mono text-[10px] uppercase tracking-[0.26em] text-ghost-mute">
+                  Phase {step.n}
+                </div>
+                <h3 className="mt-1.5 font-display text-2xl font-semibold tracking-tight transition-colors group-hover:text-holo-soft">
+                  {step.t}
+                </h3>
+                <p className="mt-2 max-w-xl text-ghost-dim">{step.d}</p>
               </li>
             ))}
           </ol>
