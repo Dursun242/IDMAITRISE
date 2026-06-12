@@ -1,7 +1,7 @@
 /**
- * Maison isométrique en fil de fer holographique.
+ * Maison isométrique dessinée au trait, façon esquisse d'architecte.
  * Chaque trait se dessine au chargement (stroke-dashoffset),
- * les lignes cachées apparaissent en pointillés, façon plan d'architecte.
+ * les arêtes cachées apparaissent en pointillés, les cotes s'annotent.
  */
 
 const STROKE = "url(#wfGrad)"
@@ -35,8 +35,8 @@ function Hidden({ d, delay = 0 }: { d: string; delay?: number }) {
       d={d}
       className="appear"
       style={{ animationDelay: `${delay}s` }}
-      stroke="#38E1FF"
-      strokeOpacity={0.3}
+      stroke="#8A6238"
+      strokeOpacity={0.35}
       strokeWidth={1}
       strokeDasharray="5 6"
       fill="none"
@@ -49,9 +49,9 @@ function Cross({ x, y, delay = 0 }: { x: number; y: number; delay?: number }) {
     <g
       className="appear"
       style={{ animationDelay: `${delay}s` }}
-      stroke="#7EF0FF"
+      stroke="#A87C50"
       strokeWidth={1.2}
-      opacity={0.85}
+      opacity={0.8}
     >
       <path d={`M${x - 6} ${y} L${x + 6} ${y}`} />
       <path d={`M${x} ${y - 6} L${x} ${y + 6}`} />
@@ -65,39 +65,38 @@ export function WireframeHouse() {
       <svg
         viewBox="0 0 560 520"
         fill="none"
-        className="h-auto w-full [filter:drop-shadow(0_0_18px_rgba(56,225,255,0.25))]"
+        className="h-auto w-full [filter:drop-shadow(0_24px_36px_rgba(138,98,56,0.16))]"
         role="img"
-        aria-label="Plan 3D filaire d'une maison — visualisation de projet"
+        aria-label="Esquisse 3D d'une maison — plan d'architecte en cours de tracé"
       >
         <defs>
           <linearGradient id="wfGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#7EF0FF" />
-            <stop offset="55%" stopColor="#38E1FF" />
-            <stop offset="100%" stopColor="#19B8DD" />
+            <stop offset="0%" stopColor="#C5A06F" />
+            <stop offset="55%" stopColor="#A87C50" />
+            <stop offset="100%" stopColor="#8A6238" />
           </linearGradient>
         </defs>
 
-        {/* Orbite décorative */}
+        {/* Trait de compas décoratif */}
         <ellipse
           cx="280"
           cy="360"
           rx="238"
           ry="106"
-          stroke="#38E1FF"
-          strokeOpacity="0.14"
+          stroke="#A87C50"
+          strokeOpacity="0.18"
           strokeDasharray="2 7"
-          className="animate-flicker"
         />
 
         {/* Plateforme au sol */}
         <g className="appear" style={{ animationDelay: "0.1s" }}>
           <path
             d="M280 470 L520 360 L280 250 L40 360 Z"
-            stroke="#38E1FF"
-            strokeOpacity="0.22"
+            stroke="#211D17"
+            strokeOpacity="0.18"
             strokeWidth="1"
           />
-          <g stroke="#38E1FF" strokeOpacity="0.09" strokeWidth="1">
+          <g stroke="#211D17" strokeOpacity="0.07" strokeWidth="1">
             <path d="M119 396 L359 286" />
             <path d="M198 433 L438 323" />
             <path d="M201 286 L441 396" />
@@ -115,19 +114,19 @@ export function WireframeHouse() {
         <Draw
           d="M280 430 L440 356 L440 236 L280 310 Z"
           delay={0.2}
-          fill="rgba(56,225,255,0.04)"
+          fill="rgba(168,124,80,0.05)"
         />
         <Draw
           d="M280 430 L120 356 L120 236 L280 310 Z"
           delay={0.35}
-          fill="rgba(56,225,255,0.02)"
+          fill="rgba(168,124,80,0.03)"
         />
 
         {/* Toit */}
         <Draw
           d="M280 310 L440 236 L360 129 L200 203 Z"
           delay={0.7}
-          fill="rgba(56,225,255,0.05)"
+          fill="rgba(168,124,80,0.07)"
         />
         <Draw d="M280 310 L120 236 L200 203 Z" delay={0.9} />
 
@@ -137,7 +136,7 @@ export function WireframeHouse() {
           cx="336"
           cy="378"
           r="1.6"
-          fill="#7EF0FF"
+          fill="#8A6238"
           className="appear"
           style={{ animationDelay: "1.6s" }}
         />
@@ -155,19 +154,19 @@ export function WireframeHouse() {
         <g className="appear" style={{ animationDelay: "2.2s" }}>
           <path
             d="M288 446 L448 372"
-            stroke="#9FB4C8"
-            strokeOpacity="0.55"
+            stroke="#6B6356"
+            strokeOpacity="0.6"
             strokeWidth="1"
           />
-          <path d="M286 441 L290 451" stroke="#9FB4C8" strokeOpacity="0.55" strokeWidth="1" />
-          <path d="M446 367 L450 377" stroke="#9FB4C8" strokeOpacity="0.55" strokeWidth="1" />
+          <path d="M286 441 L290 451" stroke="#6B6356" strokeOpacity="0.6" strokeWidth="1" />
+          <path d="M446 367 L450 377" stroke="#6B6356" strokeOpacity="0.6" strokeWidth="1" />
           <text
             x="386"
             y="428"
             className="font-mono"
             fontSize="11"
             letterSpacing="0.1em"
-            fill="#9FB4C8"
+            fill="#6B6356"
           >
             8.40 m
           </text>
@@ -175,9 +174,9 @@ export function WireframeHouse() {
 
         {/* Cotes — hauteur */}
         <g className="appear" style={{ animationDelay: "2.35s" }}>
-          <path d="M96 356 L96 236" stroke="#9FB4C8" strokeOpacity="0.55" strokeWidth="1" />
-          <path d="M92 356 L100 356" stroke="#9FB4C8" strokeOpacity="0.55" strokeWidth="1" />
-          <path d="M92 236 L100 236" stroke="#9FB4C8" strokeOpacity="0.55" strokeWidth="1" />
+          <path d="M96 356 L96 236" stroke="#6B6356" strokeOpacity="0.6" strokeWidth="1" />
+          <path d="M92 356 L100 356" stroke="#6B6356" strokeOpacity="0.6" strokeWidth="1" />
+          <path d="M92 236 L100 236" stroke="#6B6356" strokeOpacity="0.6" strokeWidth="1" />
           <text
             x="88"
             y="300"
@@ -185,7 +184,7 @@ export function WireframeHouse() {
             className="font-mono"
             fontSize="11"
             letterSpacing="0.1em"
-            fill="#9FB4C8"
+            fill="#6B6356"
           >
             6.20 m
           </text>
@@ -197,25 +196,25 @@ export function WireframeHouse() {
         <Cross x={120} y={236} delay={2.6} />
       </svg>
 
-      {/* Étiquettes flottantes */}
+      {/* Annotations flottantes */}
       <div
-        className="chip appear absolute -right-2 top-[12%] shadow-glow sm:right-0"
+        className="tag appear absolute -right-2 top-[12%] bg-white shadow-soft sm:right-0"
         style={{ animationDelay: "2.7s" }}
       >
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-holo animate-pulse-soft" />
-        Permis // accordé
+        <span className="inline-block h-1.5 w-1.5 animate-pulse-soft rounded-full bg-bronze" />
+        Permis accordé
       </div>
       <div
-        className="chip appear absolute -left-2 top-[48%] sm:left-0"
+        className="tag appear absolute -left-2 top-[48%] bg-white shadow-soft sm:left-0"
         style={{ animationDelay: "2.9s" }}
       >
         RE2020 ✓
       </div>
       <div
-        className="chip appear absolute bottom-[8%] right-[6%]"
+        className="tag appear absolute bottom-[8%] right-[6%] bg-white shadow-soft"
         style={{ animationDelay: "3.1s" }}
       >
-        Structure // validée
+        Structure validée
       </div>
     </div>
   )

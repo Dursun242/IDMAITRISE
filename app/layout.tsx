@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next"
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google"
+import { Playfair_Display, Inter, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { JsonLd } from "@/components/JsonLd"
-import { CursorGlow } from "@/components/CursorGlow"
 import { site } from "@/lib/site"
 
-const display = Space_Grotesk({
+const display = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-display",
+  style: ["normal", "italic"],
   display: "swap",
 })
 const sans = Inter({
@@ -25,7 +25,7 @@ const mono = IBM_Plex_Mono({
 })
 
 export const viewport: Viewport = {
-  themeColor: "#04060B",
+  themeColor: "#FAF7F0",
 }
 
 export const metadata: Metadata = {
@@ -80,7 +80,6 @@ export default function RootLayout({
     >
       <body className="font-sans">
         <JsonLd data={localBusiness} />
-        <CursorGlow />
         <Header />
         <main>{children}</main>
         <Footer />

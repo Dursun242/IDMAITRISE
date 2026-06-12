@@ -62,14 +62,13 @@ export default async function Post({
     <>
       <JsonLd data={articleSchema} />
 
-      <section className="relative overflow-hidden border-b border-holo/10">
-        <div className="absolute inset-0 hud-grid hud-grid-fade" />
-        <div className="absolute -right-32 top-0 h-[320px] w-[320px] rounded-full bg-holo/10 blur-[110px]" />
+      <section className="relative overflow-hidden border-b border-noir/10">
+        <div className="absolute inset-0 plan-grid grid-fade opacity-70" />
 
         <div className="relative mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
           <Link
             href="/blog"
-            className="group inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.16em] text-ghost-dim transition-colors hover:text-holo-soft"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-noir/65 transition-colors hover:text-bronze-deep"
           >
             <span className="rotate-180 transition-transform group-hover:-translate-x-1">
               →
@@ -77,19 +76,17 @@ export default async function Post({
             Retour au journal
           </Link>
 
-          <div className="mt-10 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ghost-mute">
-            <span className="text-holo">log</span>
-            <span>·</span>
+          <div className="mt-10 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-noir-mute">
             <span>{post.date}</span>
-            <span>·</span>
+            <span className="text-bronze">·</span>
             <span>{post.author}</span>
           </div>
 
-          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.02] tracking-tightest sm:text-6xl">
+          <h1 className="mt-5 font-display text-4xl font-medium leading-[1.06] tracking-tightest sm:text-6xl">
             {post.title}
           </h1>
           {post.description && (
-            <p className="mt-6 text-lg leading-relaxed text-ghost-dim sm:text-xl">
+            <p className="mt-6 text-lg leading-relaxed text-noir/65 sm:text-xl">
               {post.description}
             </p>
           )}
@@ -105,29 +102,29 @@ export default async function Post({
         </div>
       </article>
 
-      <section className="border-t border-holo/10">
+      <section className="border-t border-noir/10 bg-linen-warm">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="corners glass relative overflow-hidden rounded-2xl p-8 shadow-panel sm:p-12">
-            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-holo/10 blur-[90px]" />
+          <div className="relative overflow-hidden rounded-2xl bg-noir p-8 text-linen shadow-lift sm:p-12">
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-bronze/20 blur-[90px]" />
             <div className="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
               <div>
-                <div className="eyebrow">Un projet ?</div>
-                <p className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                <div className="eyebrow text-bronze-light">Un projet ?</div>
+                <p className="mt-5 font-display text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
                   Premier échange et devis
                   <br />
-                  <span className="text-gradient-holo">
+                  <span className="italic-accent text-bronze-light">
                     gratuits, au Havre.
                   </span>
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-col">
-                <Link href="/contact" className="btn-holo group justify-center">
+                <Link href="/contact" className="btn-ivory group justify-center">
                   Me contacter
                   <span className="arrow-out">→</span>
                 </Link>
                 <a
                   href={`tel:${site.phone}`}
-                  className="btn-line justify-center font-mono"
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-linen/30 px-7 py-4 font-mono text-sm font-medium transition hover:border-bronze-light hover:text-bronze-light"
                 >
                   {site.phoneDisplay}
                 </a>
@@ -140,12 +137,12 @@ export default async function Post({
       {others.length > 0 && (
         <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
           <div className="flex items-end justify-between gap-6">
-            <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h2 className="font-display text-3xl font-medium tracking-tight sm:text-4xl">
               Aussi à lire
             </h2>
             <Link
               href="/blog"
-              className="group inline-flex shrink-0 items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.16em] text-holo"
+              className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-bronze-deep"
             >
               Tout le journal
               <span className="arrow-out">→</span>
@@ -156,15 +153,15 @@ export default async function Post({
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
-                className="glass group rounded-2xl p-6 transition-all duration-500 hover:-translate-y-0.5 hover:border-holo/40 hover:shadow-glow"
+                className="panel group rounded-2xl p-6 transition-all duration-500 hover:-translate-y-0.5 hover:border-bronze/50 hover:shadow-lift"
               >
-                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-ghost-mute">
+                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-noir-mute">
                   {p.date}
                 </div>
                 <h3 className="mt-3 font-display text-lg font-semibold leading-tight tracking-tight">
                   {p.title}
                 </h3>
-                <p className="mt-2 line-clamp-2 text-sm text-ghost-dim">
+                <p className="mt-2 line-clamp-2 text-sm text-noir/60">
                   {p.description}
                 </p>
               </Link>
