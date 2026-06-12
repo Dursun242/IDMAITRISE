@@ -2,6 +2,7 @@ export const site = {
   name: "ID Maîtrise",
   legalName: "ID MAITRISE",
   tagline: "Maître d'œuvre indépendant au Havre",
+  brandTagline: "Ingénierie de la construction",
   description:
     "Cabinet indépendant de maîtrise d'œuvre au Havre. Conception, permis de construire, coordination et suivi de vos projets de construction et de rénovation en Seine-Maritime et en Normandie.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.id-maitrise.com",

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { site, services } from "@/lib/site"
+import { LogoLockup } from "@/components/Logo"
 
 export function Footer() {
   return (
@@ -10,10 +11,8 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
-            <div className="eyebrow text-bronze-light">
-              Maître d'œuvre · Le Havre
-            </div>
-            <p className="mt-5 font-display text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl">
+            <LogoLockup tagline={site.brandTagline} light />
+            <p className="mt-8 font-display text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl">
               Concevons ensemble
               <br />
               <span className="italic-accent text-bronze-light">
@@ -113,9 +112,9 @@ export function Footer() {
 
         <div
           aria-hidden
-          className="text-outline mt-20 select-none font-display text-[17vw] font-bold leading-[0.9] tracking-tightest"
+          className="text-outline mt-20 select-none font-sans text-[16vw] font-extrabold leading-[0.9] tracking-tight"
         >
-          ID&nbsp;Maîtrise
+          id&nbsp;Maîtrise
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-linen/10 pt-8 font-mono text-[11px] uppercase tracking-[0.14em] text-linen/45 sm:flex-row sm:items-center sm:justify-between">

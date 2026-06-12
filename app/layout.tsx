@@ -36,6 +36,9 @@ export const metadata: Metadata = {
   },
   description: site.description,
   alternates: { canonical: "/" },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { site } from "@/lib/site"
+import { LogoLockup } from "@/components/Logo"
 
 const nav = [
   { href: "/", label: "L'agence" },
@@ -14,14 +15,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-noir/10 bg-linen/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-        <Link href="/" className="group flex items-center gap-3">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-bronze transition-transform group-hover:scale-125" />
-          <span className="font-display text-xl font-semibold tracking-tight">
-            ID&nbsp;Maîtrise
-          </span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-noir-mute sm:inline">
-            Le Havre
-          </span>
+        <Link
+          href="/"
+          className="transition-opacity hover:opacity-75"
+          aria-label="id Maîtrise — Accueil"
+        >
+          <LogoLockup tagline={site.brandTagline} />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
