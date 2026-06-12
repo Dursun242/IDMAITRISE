@@ -1,58 +1,63 @@
 /**
  * Logo id Maîtrise — ampoule rayonnante, recréée en vectoriel
- * d'après le logo officiel (net à toutes les tailles, couleur adaptable
- * via currentColor pour les fonds clairs et sombres).
+ * d'après le logo officiel haute résolution : culot à dôme et bagues
+ * détourées, verre sphérique, filament-ruban déchiré, douze rayons.
+ * currentColor permet l'usage sur fonds clairs et sombres.
  */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 96 96"
       fill="none"
       className={className}
       role="img"
       aria-label="Logo id Maîtrise"
     >
-      {/* Culot : dôme + bagues évasées */}
-      <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <path d="M21 6 A3 3 0 0 1 27 6" />
-        <path d="M20 8.5 H28" />
-        <path d="M19.5 11 H28.5" />
-        <path d="M19 13.5 H29" />
+      {/* Culot : dôme + bagues détourées + collerette */}
+      <g stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+        <path d="M43 11 A5 4.5 0 0 1 53 11" />
+        <rect x="41" y="13" width="14" height="4.6" rx="2.3" strokeLinejoin="round" />
+        <rect x="40" y="18.6" width="16" height="4.6" rx="2.3" strokeLinejoin="round" />
+        <path d="M41 23.4 L39.4 27.4" />
+        <path d="M55 23.4 L56.6 27.4" />
       </g>
 
       {/* Verre */}
       <path
-        d="M20 14 C17.5 17.5 14.5 20.5 14.5 25.5 C14.5 31 18.8 35.5 24 35.5 C29.2 35.5 33.5 31 33.5 25.5 C33.5 20.5 30.5 17.5 28 14"
+        d="M39.4 27.4 C36.6 32.4 33 36.5 30.5 42 C29.2 45 28.5 48 28.5 51 C28.5 62 37 70.5 48 70.5 C59 70.5 67.5 62 67.5 51 C67.5 48 66.8 45 65.5 42 C63 36.5 59.4 32.4 56.6 27.4"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
 
-      {/* Filament « brisé » */}
+      {/* Filament-ruban déchiré */}
       <g
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M21.5 14 L20.6 20" />
-        <path d="M26.5 14 L27.4 19.3" />
-        <path d="M20.6 20 L23 18.4 L23.8 22.6 L25 18.8 L26 21.4 L27.4 19.3" />
+        <path d="M43.5 28 C43 33 42 37 41 40.5" />
+        <path d="M48 28 C47.6 31.5 47 34.5 46.3 37.5" />
+        <path d="M52.5 28 C52.8 32 53 35 53.5 38" />
+        <path d="M41 40.5 L45 37.5 L45.8 43.5 L48.3 38.2 L49.5 41.8 L51.2 37.8 L53.5 38" />
       </g>
 
       {/* Rayons */}
-      <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <path d="M15.2 16.7 L11.6 13.1" />
-        <path d="M12.2 21.2 L7.6 19.6" />
-        <path d="M11.5 25.5 L6.6 25.5" />
-        <path d="M12.7 30.7 L8.4 32.6" />
-        <path d="M16.9 35.6 L13.6 40.3" />
-        <path d="M22.9 38 L22.5 43" />
-        <path d="M28.2 37.2 L30.2 41.8" />
-        <path d="M33.5 33.4 L37.3 36.5" />
-        <path d="M36.3 23.4 L41.2 22.5" />
-        <path d="M32.8 16.7 L36.4 13.1" />
+      <g stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+        <path d="M29.6 32.6 L23.3 26.3" />
+        <path d="M23.9 41.3 L15.6 37.9" />
+        <path d="M22 51 L13 51" />
+        <path d="M23.9 60.8 L15.6 64.1" />
+        <path d="M29.6 69.4 L23.3 75.7" />
+        <path d="M37.9 74.9 L34.4 83.2" />
+        <path d="M48 77 L48 86" />
+        <path d="M58.1 74.9 L61.6 83.2" />
+        <path d="M66.4 69.4 L72.7 75.7" />
+        <path d="M72.1 60.8 L80.4 64.1" />
+        <path d="M74 51 L83 51" />
+        <path d="M66.4 32.6 L72.7 26.3" />
       </g>
     </svg>
   )
@@ -69,7 +74,7 @@ export function LogoLockup({
   return (
     <span className="flex items-center gap-3">
       <LogoMark
-        className={`h-10 w-10 shrink-0 ${light ? "text-linen" : "text-noir"}`}
+        className={`h-11 w-11 shrink-0 ${light ? "text-linen" : "text-noir"}`}
       />
       <span className="flex flex-col">
         <span
