@@ -1,0 +1,5 @@
+# Outils d'analyse SEO exécutés par GitHub Actions (voir seo/README.md),
+# sans rapport avec le site Next.js. La présence de seo/requirements.txt
+# faisait croire à Vercel qu'il s'agissait d'une fonction Python à
+# déployer, ce qui faisait échouer le build ("No python entrypoint found").
+seo/
