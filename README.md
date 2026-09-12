@@ -1,134 +1,88 @@
-# ID Maîtrise — site Next.js
+# Site ID Maîtrise — Next.js 15
 
-Site de **ID Maîtrise**, maître d'œuvre indépendant au Havre.
-Pensé pour le SEO local et pour **s'auto-alimenter en articles** chaque semaine.
+Refonte du site id-maitrise.com : maîtrise d'œuvre TCE, Le Havre.
+Objectif : référencement naturel sur les intentions commerciales et maximisation
+des demandes de devis.
 
-Stack : **Next.js 15** (App Router, TypeScript) · **Tailwind CSS** · articles en **Markdown** · déploiement **Vercel** · moteur d'articles via **GitHub Actions**.
-
----
-
-## 1. Lancer en local
-
-Prérequis : Node 18+ (idéalement 20).
+## Démarrage
 
 ```bash
 npm install
-cp .env.example .env.local   # puis remplis les variables (voir plus bas)
-npm run dev                  # http://localhost:3000
+cp .env.example .env.local     # puis renseigner RESEND_API_KEY
+npm run dev
 ```
 
-Build de production :
+## Variables d'environnement (Vercel → Settings → Environment Variables)
 
-```bash
-npm run build && npm start
-```
+| Variable | Rôle |
+|---|---|
+| `RESEND_API_KEY` | Envoi des demandes de devis |
+| `CONTACT_TO` | Adresse de réception |
+| `CONTACT_FROM` | Expéditeur vérifié dans Resend (domaine à authentifier SPF/DKIM) |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.id-maitrise.com` |
 
----
+## Où modifier quoi
 
-## 2. Structure
+| Besoin | Fichier |
+|---|---|
+| Ajouter ou modifier une prestation, un guide, une zone, un chantier | `content/site.ts` — **un seul fichier** |
+| Coordonnées, SIRET, réseaux sociaux | `content/site.ts` → `SITE` |
+| Redirections de l'ancien site | `lib/redirections.json` (270 entrées) |
+| Métadonnées et données structurées | `lib/seo.tsx` |
+| Formulaire, header, footer | `components/index.tsx` |
 
-```
-app/                  Pages (App Router)
-  page.tsx            Accueil
-  blog/               Liste + article [slug]
-  [service]/          Pages prestations (1 page = 1 fichier dans content/services)
-  contact/            Page contact + formulaire
-  api/contact/        Réception du formulaire (Resend)
-  sitemap.ts          Sitemap auto (pages + services + articles)
-  robots.ts           Robots auto
-components/           Header, Footer, ContactForm, JsonLd
-lib/
-  site.ts             ⚙️ Coordonnées, réseaux, liste des prestations (À ÉDITER)
-  content.ts          Lecture des fichiers Markdown
-content/
-  blog/               Les articles (.md) — alimentés à la main OU automatiquement
-  services/           Les pages prestations (.md)
-  keywords-backlog.json  File d'attente des mots-clés à traiter
-scripts/
-  generate-article.mjs   Génère 1 article depuis le backlog
-.github/workflows/
-  weekly-article.yml     Lance la génération chaque semaine -> Pull Request
-```
+Le sitemap (`/sitemap.xml`) se régénère automatiquement à chaque ajout
+dans `content/site.ts`. Aucune action manuelle.
 
-> **Pour modifier tes infos** (téléphone, adresse, prestations, réseaux) : tout est dans `lib/site.ts`.
+## Règle anti-cannibalisation
 
----
+C'est ce qui a plombé l'ancien site : cinq pages visaient « AMO », six visaient
+« extension de maison ». Elles se concurrençaient entre elles.
 
-## 3. Déployer sur Vercel
+**Avant de créer une page, vérifier que son champ `motCle` n'existe nulle part
+ailleurs dans `content/site.ts`.** Si le mot-clé existe déjà, enrichir la page
+existante plutôt que d'en créer une nouvelle.
 
-1. Crée un dépôt GitHub et pousse ce dossier.
-2. Sur [vercel.com](https://vercel.com) → **New Project** → importe le dépôt.
-3. Dans **Settings → Environment Variables**, ajoute :
-   - `NEXT_PUBLIC_SITE_URL` = `https://www.id-maitrise.com` (l'URL finale du site)
-   - `RESEND_API_KEY` = ta clé Resend (optionnel — sans elle, le formulaire journalise au lieu d'envoyer)
-4. Deploy. À chaque `git push`, Vercel redéploie tout seul.
+## Bascule en production — ordre des opérations
 
----
+1. Déployer sur Vercel, vérifier que `/sitemap.xml` et `/robots.txt` répondent.
+2. Tester une dizaine de redirections depuis le CSV (les lignes marquées P1).
+3. Basculer le DNS.
+4. Search Console : soumettre `https://www.id-maitrise.com/sitemap.xml`.
+5. Search Console : coller le code de vérification dans `app/layout.tsx` → `verification.google`.
+6. Surveiller le rapport Pages pendant trois semaines. Une baisse de trafic
+   de deux à six semaines est normale après une refonte.
+7. Ne pas toucher aux URL pendant six mois.
 
-## 4. Le moteur d'articles (le cœur du projet)
+## Contenu à produire ensuite
 
-Chaque semaine, une **GitHub Action** prend le prochain mot-clé `todo` de
-`content/keywords-backlog.json`, génère un article Markdown et **ouvre une Pull
-Request**. Tu relis, tu ajustes si besoin, tu **merges** → l'article est publié
-au prochain déploiement.
+Les six premières prestations et les guides principaux sont rédigés.
+Les autres pages ont une trame en place à enrichir — priorité aux pages
+qui captent déjà des impressions sans clic (voir le CSV de redirections).
 
-> ⚠️ La Pull Request (au lieu d'une publication directe) est volontaire :
-> une relecture humaine évite la pénalité Google « contenu de masse » et garde
-> la qualité. C'est ce qui fait la différence sur la durée.
+Ce qui manque et qui pèse le plus sur la conversion :
+- **photos de chantier réelles** (les visuels stock décrédibilisent)
+- **avis clients** (Google Business Profile, puis affichage sur le site)
 
-### Configurer les secrets GitHub
+## Typographie
 
-Dans le dépôt → **Settings → Secrets and variables → Actions** :
+**Lato**, en 300 / 400 / 700 / 900. C'est la police du logo : le site et l'identité
+ne font qu'un.
 
-**Secrets :**
-- `ANTHROPIC_API_KEY` — ta clé Claude (fournisseur par défaut)
-- `MISTRAL_API_KEY` — (optionnel) si tu passes sur Mistral
+Deux réglages à ne pas défaire, ils sont dans `app/globals.css` :
 
-**Variables :**
-- `AI_PROVIDER` = `anthropic` (défaut) ou `mistral`
-- `ANTHROPIC_MODEL` = ex. `claude-3-5-sonnet-latest` (optionnel)
-- `MISTRAL_MODEL` = ex. `mistral-small-latest` (optionnel)
+- les grands titres sont en **900** (`font-black`), pas en 700. En 700, Lato
+  paraît molle sur un `h1` de 4 rem ;
+- l'interlettrage des titres est resserré à `-0.035em`. Lato est dessinée
+  pour du texte courant, elle s'espace trop en grande taille.
 
-### Lancer / tester
+Chargée via `next/font/google`, donc auto-hébergée au build : aucune requête
+vers Google au chargement des pages, et pas de bandeau cookies pour ça.
 
-- Manuel : onglet **Actions** → « Article SEO hebdomadaire » → **Run workflow**.
-- En local : `npm run generate:article` (avec `ANTHROPIC_API_KEY` dans `.env.local`).
+## Analyse SEO automatisée
 
-### Ajouter des mots-clés
+Un workflow hebdomadaire lit la Search Console, détecte les opportunités et
+ouvre une pull request avec un rapport et, éventuellement, des brouillons de
+pages. Rien n'est publié sans validation manuelle.
 
-Édite `content/keywords-backlog.json` :
-
-```json
-{ "keyword": "ravalement de façade le havre", "intent": "Obligations, autorisation et coût d'un ravalement au Havre.", "status": "todo" }
-```
-
-Le script traite le premier `todo`, puis le passe à `done`.
-
-### Changer de fournisseur IA (Claude ↔ Mistral)
-
-Une seule variable : `AI_PROVIDER`. Aucun code à toucher.
-
----
-
-## 5. Migration depuis l'ancien site (IMPORTANT)
-
-Le site actuel (JALIS) s'arrête l'an prochain. Deux choses à ne PAS rater :
-
-1. **Le nom de domaine.** Vérifie qui possède `id-maitrise.com` (WHOIS). S'il est
-   au nom de l'agence, fais-le transférer à ton nom **maintenant**, pas dans 11 mois.
-2. **Les redirections 301.** Au moment de basculer le domaine vers ce nouveau
-   site, ajoute dans `next.config.mjs` une redirection `permanent: true` de chaque
-   ancienne URL vers la nouvelle (un exemple est déjà en commentaire). Sans ça,
-   tu perds le référencement durement acquis.
-
-> On construira la table de redirections ensemble à partir d'un crawl de l'ancien site.
-
----
-
-## 6. Prochaines étapes prévues
-
-- [ ] Étoffer les pages prestations « money pages » une par une (permis & déclaration préalable en priorité)
-- [ ] Fusionner les pages qui se cannibalisent sur l'ancien site
-- [ ] Générer la table de redirections 301
-- [ ] Optimiser la fiche Google Business (priorité en local)
-- [ ] Ajouter un visuel `og.jpg` (partage réseaux) à la racine de `public/`
+Voir `seo/README.md` pour la mise en place et le cycle de validation.

@@ -1,121 +1,37 @@
-import type { Metadata } from "next"
-import { ContactForm } from "@/components/ContactForm"
-import { site } from "@/lib/site"
+import { BlocCta, Cote, FilAriane } from "@/components";
+import { SITE } from "@/content/site";
+import { meta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact — Maître d'œuvre au Havre",
-  description:
-    "Contactez ID Maîtrise, maître d'œuvre indépendant au Havre. Devis gratuit pour vos projets de construction, extension et rénovation en Normandie.",
-  alternates: { canonical: "/contact" },
-}
+export const metadata = meta({
+  titre: "Contact — ID Maîtrise, maître d'œuvre au Havre",
+  description: "Décrivez votre projet de construction ou de rénovation. Réponse sous 48 h ouvrées avec un premier avis de faisabilité gratuit. 9 rue Henry Genestal, Le Havre.",
+  chemin: "/contact",
+});
 
-export default function ContactPage() {
+export default function Contact() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-noir/10">
-        <div className="absolute inset-0 plan-grid grid-fade opacity-70" />
-        <div className="absolute -right-32 top-0 h-[380px] w-[380px] rounded-full bg-bronze/10 blur-[110px]" />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="eyebrow">Contact</div>
-          <h1 className="mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] tracking-tightest sm:text-7xl">
-            Parlons de
-            <br />
-            <span className="italic-accent text-bronze-deep">
-              votre projet.
-            </span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg text-noir/65">
-            Construction, extension, rénovation, permis de construire :
-            décrivez-nous votre projet en quelques lignes, on revient vers vous
-            sous 24–48 h ouvrées.
+      <section className="pt-10 pb-8">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <FilAriane items={[{ href: "/", label: "Accueil" }, { href: "/contact", label: "Contact" }]} />
+          <Cote gauche="CONTACT" />
+          <h1 className="max-w-[16ch] mb-6 text-[2.1rem] sm:text-[3rem]">Décrivez votre projet.</h1>
+          <p className="text-[1.05rem] max-w-[56ch] mb-8">
+            Plus votre description est précise, plus notre première réponse sera utile. Surface, état d&apos;avancement,
+            budget envisagé et échéance : ces quatre éléments suffisent pour un premier avis sérieux.
           </p>
+          <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-bord border border-bord">
+            {[["TÉLÉPHONE", SITE.tel], ["E-MAIL", SITE.email],
+              ["ADRESSE", `${SITE.adresse}, ${SITE.cp} ${SITE.ville}`], ["HORAIRES", SITE.horaires]].map(([k, v]) => (
+              <div key={k} className="bg-gris p-5">
+                <dt className="font-mono text-[0.68rem] text-grist mb-1.5">{k}</dt>
+                <dd className="text-[0.98rem] font-medium break-words">{v}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
-          <div className="corners panel rounded-2xl p-8 shadow-lift sm:p-10">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-noir-mute">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-bronze" />
-              Nouveau projet
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight">
-              Décrivez votre projet
-            </h2>
-            <p className="mt-2 text-sm text-noir/60">
-              Plus c'est détaillé, plus nous serons précis dans notre réponse.
-            </p>
-            <div className="mt-8">
-              <ContactForm />
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            <div className="panel rounded-2xl p-6 shadow-soft">
-              <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-noir-mute">
-                Téléphone
-              </div>
-              <a
-                href={`tel:${site.phone}`}
-                className="mt-3 block font-display text-4xl font-medium tracking-tightest text-noir transition-colors hover:text-bronze-deep"
-              >
-                {site.phoneDisplay}
-              </a>
-              <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-noir-mute">
-                {site.hoursDisplay}
-              </p>
-            </div>
-
-            <div className="panel rounded-2xl p-6 shadow-soft">
-              <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-noir-mute">
-                Email
-              </div>
-              <a
-                href={`mailto:${site.email}`}
-                className="mt-3 block text-lg font-medium text-noir transition-colors hover:text-bronze-deep"
-              >
-                {site.email}
-              </a>
-            </div>
-
-            <div className="panel rounded-2xl p-6 shadow-soft">
-              <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-noir-mute">
-                Le cabinet — Le Havre
-              </div>
-              <p className="mt-3 text-lg leading-snug text-noir">
-                {site.address.street}
-                <br />
-                {site.address.postalCode} {site.address.city}
-              </p>
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-bronze-deep/70">
-                Lat 49.4944° N — Lon 0.1079° E
-              </p>
-              <a
-                href={site.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-underline mt-4 inline-block text-sm font-medium text-bronze-deep"
-              >
-                Itinéraire Google Maps →
-              </a>
-            </div>
-
-            <div className="corners panel rounded-2xl p-6 shadow-soft">
-              <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-noir-mute">
-                Zones d'intervention
-              </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {site.areaServed.map((zone) => (
-                  <span key={zone} className="tag">
-                    {zone}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BlocCta texte="Votre demande" contexte="page-contact" />
     </>
-  )
+  );
 }

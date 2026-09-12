@@ -1,100 +1,47 @@
-import type { Metadata, Viewport } from "next"
-import { Playfair_Display, Inter, IBM_Plex_Mono } from "next/font/google"
-import "./globals.css"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
-import { JsonLd } from "@/components/JsonLd"
-import { site } from "@/lib/site"
+import type { Metadata } from "next";
+import { Lato } from "next/font/google";
+import { Header, Footer } from "@/components";
+import { SITE } from "@/content/site";
+import { JsonLd, jsonLdEntreprise } from "@/lib/seo";
+import "./globals.css";
 
-const display = Playfair_Display({
+// Lato : la police du logo ID Maîtrise.
+const lato = Lato({
   subsets: ["latin"],
-  variable: "--font-display",
-  style: ["normal", "italic"],
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-lato",
   display: "swap",
-})
-const sans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-})
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600"],
-  display: "swap",
-})
-
-export const viewport: Viewport = {
-  themeColor: "#FAF7F0",
-}
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s | ${site.name}`,
+    default: "Maître d'œuvre au Havre (76) — ID Maîtrise, MOE TCE indépendant",
+    template: "%s",
   },
-  description: site.description,
-  alternates: { canonical: "/" },
+  description:
+    "Maîtrise d'œuvre TCE indépendante au Havre : permis de construire, OPC, AMO, direction de travaux. Construction, extension et rénovation en Seine-Maritime.",
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/favicon-32.png", sizes: "32x32" }, { url: "/favicon-512.png", sizes: "512x512" }],
+    apple: "/apple-touch-icon.png",
   },
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    url: site.url,
-    siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
-    description: site.description,
-    images: [
-      {
-        url: "/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: `${site.name} — ${site.brandTagline}`,
-      },
-    ],
-  },
-  robots: { index: true, follow: true },
-}
+  openGraph: { images: ["/og-image.jpg"] },
+  verification: { google: "" }, // ← code Search Console
+};
 
-const localBusiness = {
-  "@context": "https://schema.org",
-  "@type": "GeneralContractor",
-  "@id": `${site.url}/#business`,
-  name: site.legalName,
-  url: site.url,
-  telephone: site.phone,
-  email: site.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: site.address.street,
-    postalCode: site.address.postalCode,
-    addressLocality: site.address.city,
-    addressRegion: site.address.region,
-    addressCountry: site.address.country,
-  },
-  areaServed: site.areaServed,
-  openingHours: "Mo-Fr 09:00-18:00",
-  sameAs: [site.social.linkedin, site.social.instagram, site.social.facebook],
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="fr"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
-    >
-      <body className="font-sans">
-        <JsonLd data={localBusiness} />
+    <html lang="fr" className={lato.variable}>
+      <body className="bg-white text-ink font-sans antialiased">
+        <a href="#contenu"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-3 focus:z-[99] bg-jaune text-ink px-4 py-2.5 rounded-full">
+          Aller au contenu
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="contenu">{children}</main>
         <Footer />
+        <JsonLd data={jsonLdEntreprise()} />
       </body>
     </html>
-  )
+  );
 }

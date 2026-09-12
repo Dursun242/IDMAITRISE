@@ -1,363 +1,270 @@
-import Link from "next/link"
-import type { Metadata } from "next"
-import { site, services } from "@/lib/site"
-import { getAllDocs } from "@/lib/content"
-import { Marquee } from "@/components/Marquee"
-import { Stats } from "@/components/Stats"
-import { ProcessSteps } from "@/components/ProcessSteps"
-import { ServiceCard } from "@/components/ServiceCard"
-import { WireframeHouse } from "@/components/WireframeHouse"
+// app/page.tsx — accueil. Objectif : orienter vers la bonne page, puis vers le devis.
+import Link from "next/link";
+import { BlocCta, BlocFaq, PhotoSlot } from "@/components";
+import { PRESTATIONS, REALISATIONS, SITE } from "@/content/site";
+import { meta, JsonLd, jsonLdFaq } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Maître d'œuvre au Havre — ID Maîtrise",
-  description: site.description,
-  alternates: { canonical: "/" },
-}
+export const metadata = meta({
+  titre: "Maître d'œuvre au Havre (76) — ID Maîtrise, MOE TCE indépendant",
+  description:
+    "Cabinet de maîtrise d'œuvre indépendant au Havre. Permis de construire, extension, rénovation, OPC. Un seul interlocuteur, du permis à la réception.",
+  chemin: "/",
+});
 
-const engagements = [
-  {
-    n: "01",
-    t: "Interlocuteur unique",
-    d: "Un seul responsable de l'étude à la réception. Artisans, planning, budget — tout passe par nous.",
-  },
-  {
-    n: "02",
-    t: "Conformité totale",
-    d: "Plans conformes RE2020, assurance décennale, responsabilité civile professionnelle.",
-  },
-  {
-    n: "03",
-    t: "Ancrage normand",
-    d: "Réseau d'artisans locaux, connaissance fine du PLUi du Havre et des règles ABF.",
-  },
-]
+const FAQ = [
+  { q: "Quelle différence entre un maître d'œuvre et un constructeur ?",
+    r: "Un constructeur vend une maison avec ses propres équipes et sa marge intégrée au prix global. Un maître d'œuvre travaille pour vous : il conçoit le projet, met les entreprises en concurrence et défend vos intérêts pendant le chantier. Vous signez directement avec chaque entreprise et vous voyez le détail de chaque prix." },
+  { q: "Faut-il un architecte ou un maître d'œuvre pour mon projet ?",
+    r: "Le recours à un architecte est obligatoire au-delà de 150 m² de surface de plancher pour une maison individuelle. En dessous de ce seuil, un maître d'œuvre peut déposer et suivre votre permis de construire. Nous vous le disons dès le premier échange, en fonction de votre surface réelle." },
+  { q: "Combien coûte une mission de maîtrise d'œuvre ?",
+    r: "Les honoraires se calculent en pourcentage du montant des travaux, généralement entre 6 et 12 % selon l'étendue de la mission. Une mission limitée au permis de construire est facturée au forfait. Le devis détaille chaque phase, sans coût variable en cours de route." },
+  { q: "Intervenez-vous en dehors du Havre ?",
+    r: "Oui, sur la Seine-Maritime, l'Eure et le Calvados. Notre limite est pratique : nous intervenons là où nous pouvons être physiquement présents sur le chantier chaque semaine." },
+];
 
-const charte = [
-  { k: "Interlocuteur", v: "Unique, de A à Z" },
-  { k: "Assurances", v: "Décennale + RC Pro" },
-  { k: "Artisans", v: "Normands, sélectionnés" },
-  { k: "Conformité", v: "RE2020 · PLUi · ABF" },
-  { k: "Budget", v: "Engagé, puis tenu" },
-  { k: "Suivi", v: "Réunions hebdomadaires" },
-]
+// Couleur par famille : bleu urbanisme, jaune études et chantier, corail structure.
+const FAMILLE: Record<string, string> = {
+  "permis-de-construire-le-havre": "bg-bleuc text-bleu",
+  "declaration-prealable": "bg-bleuc text-bleu",
+  "etude-thermique-re2020": "bg-jaunec text-[#8A6200]",
+  "etude-de-sol-geotechnique": "bg-jaunec text-[#8A6200]",
+  "ouverture-mur-porteur-le-havre": "bg-corailc text-[#D23F1E]",
+  "opc-ordonnancement-pilotage-coordination": "bg-jaunec text-[#8A6200]",
+};
 
-export default function Home() {
-  const posts = getAllDocs("blog").slice(0, 3)
+const ETAPES: [string, string, string][] = [
+  ["Premier échange", "Gratuit · 45 min", "Terrain, budget, contraintes d'urbanisme. Avis franc sur la faisabilité."],
+  ["Étude et permis", "4 à 8 semaines", "Plans, descriptif, estimation. Dépôt et suivi de l'instruction."],
+  ["Consultation", "3 à 5 semaines", "Mise en concurrence des artisans et analyse des devis lot par lot."],
+  ["Travaux", "Durée du chantier", "Planning, réunions, comptes rendus écrits, gestion des aléas."],
+  ["Réception", "Clôture", "Levée des réserves, remise du DOE et point sur les garanties."],
+];
 
+const BORDS = ["border-bleu", "border-[#4A72E8]", "border-vert", "border-jaune", "border-corail"];
+const CHIFFRES = ["text-bleu", "text-[#4A72E8]", "text-vert", "text-[#C89400]", "text-corail"];
+
+export default function Accueil() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 plan-grid grid-fade opacity-70" />
-        <div className="absolute -left-32 top-20 h-[420px] w-[420px] rounded-full bg-bronze/10 blur-[110px] animate-aurora" />
-        <div
-          className="absolute right-0 top-1/2 h-[360px] w-[360px] rounded-full bg-bronze/10 blur-[110px] animate-aurora"
-          style={{ animationDelay: "7s" }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-14 sm:px-8 sm:pb-28 sm:pt-20">
-          <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
-            {/* Colonne texte */}
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="eyebrow">Maître d'œuvre indépendant</span>
-                <span className="tag">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-bronze" />
-                  Le Havre · Normandie
-                </span>
-              </div>
-
-              <h1 className="mt-8 font-display text-[clamp(2.7rem,6vw,5rem)] font-medium leading-[1.04] tracking-tightest">
-                La maison de
-                <br />
-                votre vie,
-                <br />
-                <span className="italic-accent text-bronze-deep">
-                  dessinée au millimètre.
-                </span>
-              </h1>
-
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-noir/70">
-                ID Maîtrise conçoit et pilote votre projet — maison
-                contemporaine, extension, rénovation. Un seul interlocuteur,
-                des artisans qualifiés, un budget tenu, de la première esquisse
-                aux clés en main.
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-3">
-                <Link href="/contact" className="btn-dark group">
-                  Démarrer mon projet
-                  <span className="arrow-out">→</span>
-                </Link>
-                <a href={`tel:${site.phone}`} className="btn-line font-mono">
-                  <span className="inline-block h-2 w-2 animate-pulse-soft rounded-full bg-bronze" />
-                  {site.phoneDisplay}
-                </a>
-              </div>
+      <section className="rayons pt-7 sm:pt-12 pb-14 sm:pb-20">
+        <div className="relative z-10 max-w-content mx-auto px-5 sm:px-8 lg:px-12
+          grid lg:grid-cols-[1.08fr_.92fr] gap-8 lg:gap-14 items-center">
+          <div>
+            <span className="pill pill-jaune mb-5">Ingénierie de la construction · Le Havre</span>
+            <h1 className="mb-5">Votre projet.<br />Vos artisans.<br />Vos prix.</h1>
+            <p className="text-[1.06rem] sm:text-[1.2rem] text-grist max-w-[52ch] mb-7">
+              Nous concevons, chiffrons et pilotons votre chantier sans être liés à aucun constructeur.
+              Vous signez directement avec chaque entreprise et vous voyez le détail de chaque prix.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-7">
+              <Link href="/contact" className="btn btn-c">Demander un devis gratuit</Link>
+              <a href={`tel:${SITE.telE164}`} className="btn btn-o">{SITE.tel}</a>
             </div>
-
-            {/* Colonne esquisse */}
-            <div className="corners panel relative rounded-2xl p-6 shadow-lift sm:p-8">
-              <div className="absolute inset-0 sheet-grid rounded-2xl" />
-              <div className="relative">
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-noir-mute">
-                  <span className="inline-flex items-center gap-2">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-bronze" />
-                    Esquisse · Maison familiale
-                  </span>
-                  <span>Le Havre</span>
-                </div>
-                <div className="mt-4">
-                  <WireframeHouse />
-                </div>
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-noir/10 pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-noir-mute">
-                  <span>Échelle 1:100</span>
-                  <span>ISO 30°</span>
-                  <span className="text-bronze-deep">RE2020 ✓</span>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-2">
+              <span className="pill pill-bleu">Réponse sous 48 h</span>
+              <span className="pill pill-jaune">Décennale &amp; RC Pro</span>
+              <span className="pill pill-corail">Aucune commission</span>
             </div>
           </div>
-
-          {/* Engagements */}
-          <div className="mt-16 grid gap-5 border-t border-noir/10 pt-10 sm:grid-cols-3">
-            {engagements.map((e) => (
-              <div key={e.t} className="panel rounded-xl p-5 shadow-soft">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-lg font-semibold tracking-tight">
-                    {e.t}
-                  </h3>
-                  <span className="font-display text-sm italic text-bronze">
-                    {e.n}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-noir/65">
-                  {e.d}
-                </p>
-              </div>
-            ))}
-          </div>
+          <PhotoSlot ratio="4/5"
+            note="PHOTO PRINCIPALE — vous sur un chantier, casque, tablette à la main. Portrait 4:5." />
         </div>
       </section>
 
-      <Marquee items={site.areaServed} />
-
-      {/* À PROPOS / CHARTE */}
-      <section className="relative overflow-hidden">
-        <div className="absolute -right-40 top-10 h-[460px] w-[460px] rounded-full bg-bronze/[0.08] blur-[140px]" />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-          <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
-            <div>
-              <div className="eyebrow">Le cabinet</div>
-              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-                Une maîtrise d'œuvre
-                <br />
-                <span className="italic-accent text-bronze-deep">
-                  à taille humaine
-                </span>
-                ,
-                <br />
-                exigeante sur le détail.
-              </h2>
-              <div className="mt-7 space-y-5 text-noir/70">
-                <p className="text-lg leading-relaxed">
-                  Installé au cœur du Havre, le cabinet ID Maîtrise accompagne
-                  particuliers et professionnels sur l'ensemble de la
-                  Seine-Maritime et du Calvados. Construction neuve, extension,
-                  rénovation lourde, bâtiment professionnel : nous intervenons
-                  à toutes les échelles.
-                </p>
-                <p className="leading-relaxed">
-                  Notre force : un interlocuteur unique qui porte votre projet
-                  d'un bout à l'autre — de la lecture du PLUi au procès-verbal
-                  de réception. Nos artisans partenaires sont normands, choisis
-                  sur la qualité de leur travail et la tenue de leurs
-                  engagements.
-                </p>
-              </div>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link href="/contact" className="btn-dark group">
-                  Prendre rendez-vous
-                  <span className="arrow-out">→</span>
-                </Link>
-                <Link
-                  href="/blog"
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-noir/70 transition-colors hover:text-bronze-deep"
-                >
-                  Lire le journal
-                  <span className="arrow-out">→</span>
-                </Link>
-              </div>
+      {/* BANDE CHIFFRES */}
+      <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12 mb-16 sm:mb-24">
+        <div className="bg-bleu text-white rounded-xl3 p-7 sm:p-11 grid grid-cols-2 lg:grid-cols-4 gap-7">
+          {[["TCE", "Tous corps d'état, de la conception à la réception"],
+            ["84", "Logements en mission OPC à Fécamp"],
+            ["RE2020", "Études thermiques et réglementaires"],
+            ["48 h", "Délai de réponse à votre demande"]].map(([n, l]) => (
+            <div key={n}>
+              <b className="block text-[1.9rem] sm:text-[2.6rem] font-black tracking-[-0.04em] leading-none">{n}</b>
+              <span className="block text-[0.87rem] text-[#C3D3FF] mt-2 max-w-[22ch]">{l}</span>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* La charte du cabinet */}
-            <div className="corners panel relative rounded-2xl shadow-lift">
-              <div className="border-b border-noir/10 px-7 py-5">
-                <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-noir-mute">
-                  Nos engagements
-                </div>
-                <div className="mt-1 font-display text-2xl font-semibold tracking-tight">
-                  La charte du cabinet
-                </div>
-              </div>
-              <div className="space-y-4 px-7 py-6">
-                {charte.map((l, i) => (
-                  <div
-                    key={l.k}
-                    className="appear-up flex items-baseline text-[15px]"
-                    style={{ animationDelay: `${0.15 + i * 0.12}s` }}
-                  >
-                    <span className="font-medium text-noir">{l.k}</span>
-                    <span className="leader" aria-hidden />
-                    <span className="text-right font-display italic text-bronze-deep">
-                      {l.v}
-                    </span>
-                  </div>
+      {/* DEUX PORTES */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <span className="block text-[0.8rem] font-bold text-bleu mb-3">Par où commencer</span>
+          <h2 className="mb-4 max-w-[22ch]">Deux façons de travailler avec nous.</h2>
+          <p className="text-grist max-w-[56ch] text-[1.04rem]">
+            Votre projet n&apos;appelle pas la même mission selon qui vous êtes.
+          </p>
+          <div className="grid md:grid-cols-2 gap-5 mt-10">
+            <Link href="/particuliers" className="rounded-xl3 p-7 sm:p-10 bg-bleuc flex flex-col">
+              <span className="pill pill-bleu self-start mb-4 bg-white">Particuliers</span>
+              <h3 className="text-[1.45rem] sm:text-[1.9rem] font-black tracking-[-0.03em] mb-3">
+                Construire, agrandir ou rénover chez vous
+              </h3>
+              <p className="text-grist">Maison neuve, extension, surélévation, rénovation lourde, ouverture de mur porteur.</p>
+              <ul className="list-none p-0 my-5 text-[0.95rem]">
+                {["Permis de construire et déclaration préalable",
+                  "Plans, descriptif et estimation de budget",
+                  "Consultation d'artisans locaux et analyse des devis",
+                  "Suivi de chantier jusqu'à la réception"].map((x) => (
+                  <li key={x} className="flex gap-3 py-2 items-start">
+                    <span className="flex-none w-5 h-5 rounded-full bg-bleu mt-0.5" /> {x}
+                  </li>
                 ))}
-              </div>
-              <div className="border-t border-noir/10 px-7 py-4">
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-noir-mute">
-                  <span>Signé — ID Maîtrise</span>
-                  <span className="inline-flex items-center gap-2 text-bronze-deep">
-                    <span className="inline-block h-1.5 w-1.5 animate-pulse-soft rounded-full bg-bronze" />
-                    Depuis 15 ans
-                  </span>
-                </div>
-              </div>
-            </div>
+              </ul>
+              <span className="mt-auto font-bold text-bleu">Voir les prestations</span>
+            </Link>
+            <Link href="/professionnels" className="rounded-xl3 p-7 sm:p-10 bg-ink text-white flex flex-col">
+              <span className="pill pill-jaune self-start mb-4">Professionnels</span>
+              <h3 className="text-[1.45rem] sm:text-[1.9rem] font-black tracking-[-0.03em] mb-3">
+                Piloter une opération sans dérive
+              </h3>
+              <p className="text-[#9FA4AC]">Tertiaire, industriel, agricole, logements collectifs, équipements publics.</p>
+              <ul className="list-none p-0 my-5 text-[0.95rem]">
+                {["OPC — ordonnancement, pilotage, coordination",
+                  "AMO — assistance à maîtrise d'ouvrage",
+                  "MOE d'exécution et direction des travaux",
+                  "DPGF, appels d'offres, analyse des offres"].map((x) => (
+                  <li key={x} className="flex gap-3 py-2 items-start">
+                    <span className="flex-none w-5 h-5 rounded-full bg-jaune mt-0.5" /> {x}
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-auto font-bold text-jaune">Demander une proposition</span>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* PRESTATIONS */}
-      <section className="relative overflow-hidden bg-linen-warm">
-        <div className="absolute inset-0 plan-grid opacity-40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="eyebrow">Prestations</div>
-              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-                Sept savoir-faire,
-                <br />
-                <span className="italic-accent text-bronze-deep">
-                  un seul cabinet.
-                </span>
-              </h2>
-            </div>
-            <p className="max-w-md text-noir/65">
-              Du dessin à la coordination, en passant par les études techniques
-              réglementaires. Tout sous un même toit.
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="bg-gris rounded-xl3 p-7 sm:p-12">
+            <span className="block text-[0.8rem] font-bold text-bleu mb-3">Prestations</span>
+            <h2 className="mb-4 max-w-[22ch]">Ce que nous prenons en charge.</h2>
+            <p className="text-grist max-w-[56ch] text-[1.04rem]">
+              Missions complètes ou ponctuelles, selon ce dont votre projet a besoin.
             </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-9">
+              {PRESTATIONS.slice(0, 6).map((p) => (
+                <Link key={p.slug} href={`/prestations/${p.slug}`}
+                  className={`rounded-xl2 p-6 flex flex-col min-h-[200px] ${FAMILLE[p.slug] || "bg-white text-bleu"}`}>
+                  <span className="text-[0.74rem] font-bold mb-auto">{p.motCle.toUpperCase()}</span>
+                  <h3 className="text-ink mt-4 mb-2">{p.h1}</h3>
+                  <p className="text-grist text-[0.92rem] m-0 line-clamp-3">{p.chapo}</p>
+                </Link>
+              ))}
+            </div>
+            <Link href="/prestations" className="btn btn-o mt-8 bg-white">Toutes les prestations</Link>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-fr">
-            {services.map((s, i) => (
-              <ServiceCard key={s.slug} service={s} index={i} featured={i === 0} />
+      {/* CHANTIERS */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <span className="block text-[0.8rem] font-bold text-bleu mb-3">Chantiers</span>
+          <h2 className="mb-9 max-w-[24ch]">Des chantiers réels, pas des photos d&apos;agence.</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {REALISATIONS.map((r) => (
+              <Link key={r.slug} href={`/realisations/${r.slug}`}>
+                <PhotoSlot note={`PHOTO — ${r.titre}. Paysage 16:10.`} />
+                <h3 className="mt-4 mb-1.5">{r.titre}</h3>
+                <p className="text-grist text-[0.93rem] m-0">{r.chapo}</p>
+                <div className="flex gap-2 mt-3.5 flex-wrap">
+                  <span className={`pill ${r.statut === "Livré" ? "pill-vert" : "pill-jaune"}`}>{r.statut}</span>
+                  <span className="pill pill-bleu">{r.lieu}</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <Stats />
-
-      <ProcessSteps />
-
-      {/* JOURNAL */}
-      {posts.length > 0 && (
-        <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="eyebrow">Le journal</div>
-              <h2 className="mt-5 font-display text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-                Conseils, repères
-                <br />
-                <span className="italic-accent text-bronze-deep">
-                  et coulisses.
-                </span>
-              </h2>
-            </div>
-            <Link
-              href="/blog"
-              className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-bronze-deep"
-            >
-              Tous les articles
-              <span className="arrow-out">→</span>
-            </Link>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((p, i) => (
-              <Link
-                key={p.slug}
-                href={`/blog/${p.slug}`}
-                className="panel group relative flex flex-col rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 hover:border-bronze/50 hover:shadow-lift sm:p-8"
-              >
-                <div className="font-display text-sm italic text-noir/30">
-                  n° {String(i + 1).padStart(2, "0")}
-                </div>
-                <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-noir-mute">
-                  {p.date}
-                </div>
-                <h3 className="mt-3 font-display text-2xl font-semibold leading-tight tracking-tight">
-                  {p.title}
-                </h3>
-                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-noir/65">
-                  {p.description}
-                </p>
-                <div className="mt-auto pt-8 text-sm font-medium text-bronze-deep">
-                  Lire l'article <span className="arrow-out inline-block">→</span>
-                </div>
-              </Link>
+      {/* MÉTHODE */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <span className="block text-[0.8rem] font-bold text-bleu mb-3">Méthode</span>
+          <h2 className="mb-4 max-w-[22ch]">Cinq étapes, dans cet ordre.</h2>
+          <p className="text-grist max-w-[56ch] text-[1.04rem]">
+            Vous savez à chaque instant où en est le projet et ce qui arrive ensuite.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-10">
+            {ETAPES.map(([t, q, d], i) => (
+              <div key={t} className={`border-t-[3px] pt-4 ${BORDS[i]}`}>
+                <b className={`text-[2rem] font-black tracking-[-0.05em] leading-none ${CHIFFRES[i]}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </b>
+                <h3 className="text-[1.05rem] mt-3 mb-1.5">{t}</h3>
+                <p className="text-grist text-[0.9rem] m-0">{d}</p>
+                <span className="block text-[0.78rem] font-bold text-bleu mt-2">{q}</span>
+              </div>
             ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* CTA FINAL */}
-      <section className="relative overflow-hidden bg-linen-warm">
-        <div className="absolute inset-0 plan-grid opacity-50" />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
-          {/* Rosace de compas */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 sm:h-[540px] sm:w-[540px]"
-          >
-            <span className="absolute inset-0 rounded-full border border-bronze/15" />
-            <span className="absolute inset-[14%] rounded-full border border-bronze/12" />
-            <span className="absolute inset-[28%] animate-spin-slow rounded-full border border-dashed border-bronze/25" />
-          </div>
-
-          <div className="relative mx-auto max-w-4xl text-center">
-            <div className="eyebrow justify-center">Premier échange offert</div>
-            <p className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tightest sm:text-7xl">
-              On regarde votre
-              <br />
-              <span className="italic-accent text-bronze-deep">
-                projet ensemble
-              </span>{" "}
-              ?
+      {/* AVIS — à remplir avec de vrais avis Google */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="bg-ink text-white rounded-xl3 p-7 sm:p-12">
+            <span className="block text-[0.8rem] font-bold text-jaune mb-3">Avis clients</span>
+            <h2 className="text-white mb-4">Ce qu&apos;en disent nos clients.</h2>
+            <p className="text-[#9FA4AC] max-w-[56ch]">
+              À remplacer par vos avis Google réels — c&apos;est le levier de conversion le plus fort du site.
             </p>
-            <p className="mx-auto mt-6 max-w-xl text-noir/65">
-              Devis, faisabilité, premier rendez-vous : c'est gratuit et sans
-              engagement. On revient vers vous sous 24–48 h ouvrées.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Link href="/contact" className="btn-dark group px-8">
-                Démarrer maintenant
-                <span className="arrow-out">→</span>
-              </Link>
-              <a
-                href={`tel:${site.phone}`}
-                className="btn-line bg-white/60 px-8 font-mono"
-              >
-                {site.phoneDisplay}
-              </a>
+            <div className="grid md:grid-cols-3 gap-5 mt-8">
+              {["Demandez un avis à chaque client à la réception des travaux.",
+                "Trois avis suffisent pour démarrer.",
+                "Privilégiez ceux qui citent un type de projet précis."].map((t, i) => (
+                <div key={i} className="bg-ink2 rounded-xl2 p-6">
+                  <div className="text-jaune tracking-[2px] text-[0.95rem] mb-3">★★★★★</div>
+                  <p className="text-[#CBD0D8] text-[0.95rem]">{t}</p>
+                  <div className="text-[0.83rem] text-[#8B9099]">Emplacement d&apos;avis</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
+
+      {/* CADRE */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <span className="block text-[0.8rem] font-bold text-bleu mb-3">Cadre</span>
+          <h2 className="mb-4 max-w-[24ch]">Un cabinet déclaré, assuré et indépendant.</h2>
+          <p className="text-grist max-w-[56ch] text-[1.04rem]">
+            Ce que tout maître d&apos;ouvrage devrait vérifier avant de signer.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-9">
+            {[["🏢", "SARL ID Maîtrise", `SIRET ${SITE.siret} — ${SITE.adresse}, ${SITE.ville}.`],
+              ["🛡️", "Décennale & RC Pro", "Assurance MIC, activité MOE TCE, mission OPC incluse."],
+              ["⚖️", "Aucune commission", "Nous ne percevons rien des entreprises consultées."],
+              ["📋", "Tout par écrit", "Comptes rendus et décisions tracés après chaque réunion."]].map(([ic, t, d]) => (
+              <div key={t} className="border-[1.5px] border-bord rounded-xl2 p-6">
+                <div className="w-10 h-10 rounded-xl bg-vertc flex items-center justify-center mb-3.5">{ic}</div>
+                <h3 className="text-[1rem] mb-1.5">{t}</h3>
+                <p className="text-grist text-[0.89rem] m-0">{d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="pb-16 sm:pb-24">
+        <div className="max-w-content mx-auto px-5 sm:px-8 lg:px-12">
+          <span className="block text-[0.8rem] font-bold text-bleu mb-3">Questions fréquentes</span>
+          <h2 className="max-w-[22ch]">Ce qu&apos;on nous demande le plus.</h2>
+          <BlocFaq items={FAQ} />
+          <Link href="/guides/faq-maitrise-oeuvre" className="inline-block mt-7 font-bold text-bleu">
+            Toutes les questions
+          </Link>
+        </div>
+      </section>
+
+      <BlocCta contexte="accueil" />
+      <JsonLd data={jsonLdFaq(FAQ)} />
     </>
-  )
+  );
 }

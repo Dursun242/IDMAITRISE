@@ -2,372 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
-}
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { font-size: 17px; line-height: 1.62; }
 
-html {
-  scroll-behavior: smooth;
-}
+  /* Lato demande un resserrage sur les grands titres, sinon elle paraît molle. */
+  h1 { @apply text-[2.5rem] sm:text-[3.4rem] lg:text-[4.2rem] font-black leading-[1.04] tracking-[-0.035em]; }
+  h2 { @apply text-[1.9rem] sm:text-[2.6rem] font-bold leading-[1.08] tracking-[-0.03em]; }
+  h3 { @apply text-[1.16rem] font-bold leading-[1.28] tracking-[-0.015em]; }
 
-body {
-  @apply bg-linen text-noir antialiased;
-  font-feature-settings: "ss01", "cv11";
-  background-image:
-    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(197, 160, 111, 0.10), transparent 60%),
-    radial-gradient(ellipse 50% 35% at 95% 105%, rgba(197, 160, 111, 0.07), transparent 60%);
-  background-attachment: fixed;
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid #1F4FE0; outline-offset: 3px; border-radius: 4px;
+  }
 }
-
-/* Sélection texte */
-::selection {
-  background: #211d17;
-  color: #faf7f0;
-}
-
-/* Scrollbar custom (webkit) */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #faf7f0;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(33, 29, 23, 0.18);
-  border-radius: 10px;
-  border: 2px solid #faf7f0;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(33, 29, 23, 0.34);
-}
-
-/* ============================================================
-   Décor — esprit table à dessin
-   ============================================================ */
-
-/* Grille de plan, fine et discrète */
-.plan-grid {
-  background-image:
-    linear-gradient(to right, rgba(33, 29, 23, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(33, 29, 23, 0.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
-/* Papier millimétré teinté bronze (panneaux d'esquisse) */
-.sheet-grid {
-  background-image:
-    linear-gradient(to right, rgba(168, 124, 80, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(168, 124, 80, 0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-.grid-fade {
-  mask-image: radial-gradient(ellipse 90% 85% at 50% 15%, black 25%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 15%, black 25%, transparent 78%);
-}
-
-/* Panneau « feuille de dessin » */
-.panel {
-  background: linear-gradient(180deg, #fffefb, #fbf8f1);
-  border: 1px solid rgba(33, 29, 23, 0.10);
-}
-
-/* Équerres bronze aux coins (cadre de plan) */
-.corners {
-  position: relative;
-}
-.corners::before,
-.corners::after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: rgba(168, 124, 80, 0.6);
-  border-style: solid;
-  pointer-events: none;
-}
-.corners::before {
-  top: -1px;
-  left: -1px;
-  border-width: 1.5px 0 0 1.5px;
-}
-.corners::after {
-  bottom: -1px;
-  right: -1px;
-  border-width: 0 1.5px 1.5px 0;
-}
-
-/* Grain papier en overlay */
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  mix-blend-mode: multiply;
-}
-
-/* ============================================================
-   Typo & micro-composants
-   ============================================================ */
-
-/* Eyebrow (petit label d'annotation au-dessus des sections) */
-.eyebrow {
-  @apply inline-flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.26em] text-bronze;
-}
-.eyebrow::before {
-  content: "";
-  display: inline-block;
-  width: 28px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #a87c50);
-}
-
-/* Étiquette d'annotation (façon cartouche de plan) */
-.tag {
-  @apply inline-flex items-center gap-2 rounded-full border border-noir/15 bg-white/75 px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-noir-mute;
-}
-
-/* Mot accentué en italique serif */
-.italic-accent {
-  font-family: var(--font-display), Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-}
-
-/* Texte géant en contour (footer) */
-.text-outline {
-  -webkit-text-stroke: 1px rgba(250, 247, 240, 0.14);
-  color: transparent;
-}
-
-/* Pointillés conducteurs (charte du cabinet, façon carte de restaurant) */
-.leader {
-  flex: 1;
-  min-width: 2rem;
-  border-bottom: 1px dotted rgba(33, 29, 23, 0.3);
-  transform: translateY(-4px);
-  margin: 0 0.6em;
-}
-
-/* Lien soulignement animé */
-.link-underline {
-  position: relative;
-  display: inline-block;
-}
-.link-underline::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 1px;
-  width: 100%;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.link-underline:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* Flèche animée pour CTAs */
-.arrow-out {
-  display: inline-block;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.group:hover .arrow-out,
-a:hover .arrow-out,
-button:hover .arrow-out {
-  transform: translateX(4px);
-}
-
-/* Numbers tabular */
-.tabular {
-  font-variant-numeric: tabular-nums;
-}
-
-/* ============================================================
-   Boutons
-   ============================================================ */
 
 @layer components {
-  .btn-dark {
-    @apply inline-flex items-center justify-center gap-3 rounded-full bg-noir px-7 py-4 text-sm font-medium text-linen transition-all duration-300;
-    box-shadow: inset 0 0 0 1px rgba(250, 247, 240, 0.06);
-  }
-  .btn-dark:hover {
-    @apply bg-noir-soft;
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px -16px rgba(33, 29, 23, 0.4);
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5
+          font-semibold text-[0.96rem] border-[1.5px] border-transparent transition-colors; }
+  .btn-c { @apply bg-corail text-white hover:bg-[#ED4B28]; }
+  .btn-o { @apply border-bord text-ink hover:border-ink; }
+
+  .pill { @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[0.76rem] font-bold; }
+  .pill-bleu { @apply bg-bleuc text-bleu; }
+  .pill-jaune { @apply bg-jaunec text-[#8A6200]; }
+  .pill-vert { @apply bg-vertc text-[#0A7D62]; }
+  .pill-corail { @apply bg-corailc text-[#D23F1E]; }
+
+  .prose-id p { @apply text-grist max-w-[70ch] mb-4; }
+  .prose-id ul { @apply list-none p-0 max-w-[70ch] my-5; }
+  .prose-id li { @apply relative py-2.5 pl-8 border-b border-[#EEF1F6] text-[0.97rem]; }
+  .prose-id li::before {
+    content: ""; @apply absolute left-0 top-3.5 w-5 h-5 rounded-full bg-vertc bg-center bg-no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230FB08A' stroke-width='3.5'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+    background-size: 12px;
   }
 
-  .btn-line {
-    @apply inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-sm font-medium text-noir transition-all duration-300;
-    border: 1px solid rgba(33, 29, 23, 0.18);
-  }
-  .btn-line:hover {
-    border-color: rgba(168, 124, 80, 0.7);
-    color: #8a6238;
-    transform: translateY(-2px);
+  /* Rayons repris de l'ampoule du logo — seul ornement du site. */
+  .rayons { @apply relative overflow-hidden; }
+  .rayons::before {
+    content: ""; @apply absolute pointer-events-none rounded-full;
+    top: -140px; left: -170px; width: 520px; height: 520px;
+    background: conic-gradient(from 0deg, transparent 0 6deg, rgba(255,183,3,.28) 6deg 8deg, transparent 8deg 30deg);
+    -webkit-mask-image: radial-gradient(circle, transparent 28%, #000 40%, transparent 72%);
+    mask-image: radial-gradient(circle, transparent 28%, #000 40%, transparent 72%);
   }
 
-  .btn-ivory {
-    @apply inline-flex items-center justify-center gap-3 rounded-full bg-linen px-7 py-4 text-sm font-medium text-noir transition-all duration-300;
-  }
-  .btn-ivory:hover {
-    @apply bg-white;
-    transform: translateY(-2px);
-  }
-}
-
-/* ============================================================
-   Animations spécifiques
-   ============================================================ */
-
-/* Tracé du plan qui se dessine */
-.draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw-line 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-@keyframes draw-line {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Apparition différée (cotes, étiquettes…) */
-.appear {
-  opacity: 0;
-  animation: fade-in 0.9s ease-out forwards;
-}
-.appear-up {
-  opacity: 0;
-  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-/* Keyframes utilisés par les classes custom.
-   (Tailwind n'émet ses keyframes que si l'utilitaire animate-* est employé.) */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
+  /* Emplacement photo, tant que les vraies images ne sont pas livrées. */
+  .photo-slot { @apply relative rounded-xl3 overflow-hidden flex items-end p-5 isolate bg-gris; }
+  .photo-slot::before {
+    content: ""; @apply absolute inset-0 -z-10;
+    background:
+      repeating-linear-gradient(135deg, rgba(31,79,224,.07) 0 12px, transparent 12px 24px),
+      linear-gradient(140deg, #E7EDFA, #F6F8FC 55%, #FFF0EB);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .draw {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .appear,
-  .appear-up {
-    animation: none;
-    opacity: 1;
-  }
-}
-
-/* Reveal au scroll, via animation-timeline si supporté, sinon fade-in */
-@supports (animation-timeline: view()) {
-  .reveal {
-    animation: fade-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 30%;
-  }
-}
-@supports not (animation-timeline: view()) {
-  .reveal {
-    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-}
-
-/* Marquee piste */
-.marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 40s linear infinite;
-}
-.marquee:hover {
-  animation-play-state: paused;
-}
-
-/* ============================================================
-   Prose (articles & prestations)
-   ============================================================ */
-
-.prose-editorial {
-  @apply prose prose-neutral max-w-none;
-}
-.prose-editorial :where(h2) {
-  @apply font-display text-3xl font-semibold tracking-tight mt-12 mb-4 text-noir;
-}
-.prose-editorial :where(h3) {
-  @apply font-display text-xl font-semibold tracking-tight mt-8 mb-3 text-noir;
-}
-.prose-editorial :where(p) {
-  @apply text-[1.05rem] leading-[1.8] text-noir/75;
-}
-.prose-editorial :where(li) {
-  @apply text-noir/75;
-}
-.prose-editorial :where(li)::marker {
-  color: #a87c50;
-}
-.prose-editorial :where(strong) {
-  @apply text-noir;
-}
-.prose-editorial :where(a) {
-  @apply text-bronze-deep underline decoration-bronze/40 underline-offset-4 transition-colors hover:decoration-bronze;
-}
-.prose-editorial :where(blockquote) {
-  @apply not-italic border-l-2 border-bronze pl-6 text-noir/80;
-  background: rgba(197, 160, 111, 0.07);
-  border-radius: 0 0.75rem 0.75rem 0;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-.prose-editorial :where(code) {
-  @apply text-bronze-deep;
-  background: rgba(33, 29, 23, 0.05);
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.375rem;
-}
-.prose-editorial :where(table) {
-  @apply text-sm;
-}
-.prose-editorial :where(thead) {
-  @apply border-b border-bronze/40;
-}
-.prose-editorial :where(thead th) {
-  @apply font-mono text-[11px] uppercase tracking-[0.14em] text-bronze-deep;
-}
-.prose-editorial :where(tbody tr) {
-  @apply border-b border-noir/10;
-}
-.prose-editorial :where(hr) {
-  @apply border-noir/10;
+  *, ::before, ::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
 }
